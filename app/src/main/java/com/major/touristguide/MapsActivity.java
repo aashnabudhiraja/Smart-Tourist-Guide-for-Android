@@ -1,7 +1,9 @@
 package com.major.touristguide;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,23 +17,22 @@ import com.google.android.gms.maps.model.Dot;
 import com.google.android.gms.maps.model.Gap;
 import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.RoundCap;
+import com.google.maps.android.ui.IconGenerator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static com.major.touristguide.R.id.map;
 
 
-/**
- * An activity that displays a Google map with polylines to represent paths or routes,
- * and polygons to represent areas.
- */
 public class MapsActivity extends AppCompatActivity
         implements
         OnMapReadyCallback,
@@ -47,6 +48,9 @@ public class MapsActivity extends AppCompatActivity
     // Create a stroke pattern of a gap followed by a dot.
     private static final List<PatternItem> PATTERN_POLYLINE_DOTTED = Arrays.asList(GAP, DOT);
 
+    private static ArrayList<LatLng> positions = new ArrayList<>();
+    private static ArrayList<String> positionsTitles = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,59 +62,55 @@ public class MapsActivity extends AppCompatActivity
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(map);
         mapFragment.getMapAsync(this);
+
+        if(positions.size() > 0) positions = new ArrayList<>();
+        if(positionsTitles.size() > 0) positionsTitles = new ArrayList<>();
+
+        double[] positionsLatitudes = {30.745828, 30.759160, 30.752941, 30.756785, 30.747579, 30.7398}; //get from db
+        double[] positionsLongitudes = {76.810234, 76.807490, 76.805045, 76.802335, 76.784228, 76.7827}; //get from db
+        String[] positionTitlesFromDb = {"Sukhna Lake", "Open Hand Monument", "Rock Garden", "Capitol Complex Tourist Center", "Rose Garden", "Sector 17 Plaza"}; // get from db
+
+        for(int i = 0; i < positionsLatitudes.length; i++) {
+            positions.add(new LatLng(positionsLatitudes[i], positionsLongitudes[i]));
+            positionsTitles.add(positionTitlesFromDb[i]);
+        }
     }
 
-    /**
-     * Manipulates the map when it's available.
-     * The API invokes this callback when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera.
-     * In this tutorial, we add polylines and polygons to represent routes and areas on the map.
-     */
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        // Add polylines to the map.
-        // Polylines are useful to show a route or some other connection between points.
         Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
-                .clickable(true)
-                .add(
-                        new LatLng(-35.016, 143.321),
-                        new LatLng(-34.747, 145.592),
-                        new LatLng(-34.364, 147.891),
-                        new LatLng(-33.501, 150.217),
-                        new LatLng(-32.306, 149.248),
-                        new LatLng(-32.491, 147.309)));
-        // Store a data object with the polyline, used here to indicate an arbitrary type.
-        polyline1.setTag("A");
-        // Style the polyline.
+                .addAll(positions));
+//        polyline1.setTag("A");
+
         stylePolyline(polyline1);
 
-        Polyline polyline2 = googleMap.addPolyline(new PolylineOptions()
-                .clickable(true)
-                .add(
-                        new LatLng(-29.501, 119.700),
-                        new LatLng(-27.456, 119.672),
-                        new LatLng(-25.971, 124.187),
-                        new LatLng(-28.081, 126.555),
-                        new LatLng(-28.848, 124.229),
-                        new LatLng(-28.215, 123.938)));
-        polyline2.setTag("B");
-        stylePolyline(polyline2);
+        // Position the map's camera
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(30.752941, 76.805045), 14));
 
-        // Position the map's camera near Alice Springs in the center of Australia,
-        // and set the zoom factor so most of Australia shows on the screen.
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-23.684, 133.903), 4));
+//        googleMap.setOnPolylineClickListener(this);
 
-        // Set listeners for click events.
-        googleMap.setOnPolylineClickListener(this);
+        for(int i=0; i<positions.size(); i++) {
+
+            TextView text = new TextView(this);
+            text.setText(positionsTitles.get(i));
+            IconGenerator generator = new IconGenerator(this);
+//        generator.setBackground(this.getDrawable(R.drawable.bubble_mask));
+            generator.setContentView(text);
+            Bitmap icon = generator.makeIcon();
+
+            MarkerOptions options = new MarkerOptions()
+                    .position(positions.get(i))
+                    .icon(BitmapDescriptorFactory.fromBitmap(icon));
+            googleMap.addMarker(options);
+        }
+
     }
 
-    /**
-     * Styles the polyline, based on type.
-     * @param polyline The polyline object that needs styling.
-     */
+
     private void stylePolyline(Polyline polyline) {
-        String type = "";
+        /*String type = "";
         // Get the data object stored with the polyline.
         if (polyline.getTag() != null) {
             type = polyline.getTag().toString();
@@ -128,7 +128,7 @@ public class MapsActivity extends AppCompatActivity
                 // Use a round cap at the start of the line.
                 polyline.setStartCap(new RoundCap());
                 break;
-        }
+        }*/
 
         polyline.setEndCap(new RoundCap());
         polyline.setWidth(POLYLINE_STROKE_WIDTH_PX);
@@ -136,10 +136,7 @@ public class MapsActivity extends AppCompatActivity
         polyline.setJointType(JointType.ROUND);
     }
 
-    /**
-     * Listens for clicks on a polyline.
-     * @param polyline The polyline object that the user has clicked.
-     */
+
     @Override
     public void onPolylineClick(Polyline polyline) {
         // Flip from solid stroke to dotted stroke pattern.
@@ -150,8 +147,8 @@ public class MapsActivity extends AppCompatActivity
             polyline.setPattern(null);
         }
 
-        Toast.makeText(this, "Route type " + polyline.getTag().toString(),
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Route type " + polyline.getTag().toString(),
+//                Toast.LENGTH_SHORT).show();
     }
 
 }
