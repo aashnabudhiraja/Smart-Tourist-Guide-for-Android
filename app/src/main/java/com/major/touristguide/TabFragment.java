@@ -32,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
@@ -47,6 +48,9 @@ public class TabFragment extends Fragment implements AdapterView.OnItemClickList
     ListView listView;
     List<RowItem> rowItems;
     final List<List<String>> placesList = new ArrayList<>();
+    Map<String, ArrayList<String>> placeNamesPerItinerary;
+    Map<String, ArrayList<String>> latitudesPerItinerary;
+    Map<String, ArrayList<String>> longitudesPerItinerary;
 
     public static Fragment getInstance(int position, List<String> itineraryId) {
         Bundle bundle = new Bundle();
@@ -64,7 +68,6 @@ public class TabFragment extends Fragment implements AdapterView.OnItemClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         position = getArguments().getInt("pos");
-
 
         List<String> place0 = new ArrayList<>();
         List<String> place1 = new ArrayList<>();
@@ -101,9 +104,11 @@ public class TabFragment extends Fragment implements AdapterView.OnItemClickList
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //textView = (TextView) view.findViewById(R.id.textView);
 
-        //textView.setText("Fragment " + (position + 1));
+        placeNamesPerItinerary = new HashMap<>();
+        latitudesPerItinerary = new HashMap<>();
+        longitudesPerItinerary = new HashMap<>();
+
         Firebase.setAndroidContext(view.getContext());
         rowItems = new ArrayList<>();
 
@@ -122,30 +127,7 @@ public class TabFragment extends Fragment implements AdapterView.OnItemClickList
                 System.out.println("places"+placeIds);
                 for(int i=0;i<placeIds.size();i++) {
                     final int j=i;
-//                    StringRequest request1 = new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
-//                        @Override
-//                        public void onResponse(String s) {
-//                            try {
-//
-//                                JSONObject obj1 = new JSONObject(s);
-//                                System.out.println("object"+obj1);
-//                                String placeName = obj1.getJSONObject(placeIds.get(j)).getString("placeName");
-//
-//                                rowItems.add(new RowItem(R.drawable.ic_launcher_background, placeName, "Chandigarh Popular Places to visit"));
-//
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }, new Response.ErrorListener() {
-//                        @Override
-//                        public void onErrorResponse(VolleyError volleyError) {
-//                            System.out.println("" + volleyError);
-//                        }
-//                    });
-//
-//                    RequestQueue rQueue1 = Volley.newRequestQueue(getContext());
-//                    rQueue1.add(request1);
+
                     reference2.child(placeIds.get(j)).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -157,6 +139,41 @@ public class TabFragment extends Fragment implements AdapterView.OnItemClickList
                             CustomBaseAdapter adapter = new CustomBaseAdapter(getContext(), rowItems);
                             listView.setAdapter(adapter);
 
+                            //populate place names list
+                            if(placeNamesPerItinerary.isEmpty()) {
+                                ArrayList<String> placeNameList = new ArrayList<>();
+                                placeNameList.add(placeName);
+                                placeNamesPerItinerary.put(itineraryIds.get(position), placeNameList);
+                            }
+                            else {
+                                ArrayList<String> placeNameList = placeNamesPerItinerary.get(itineraryIds.get(position));
+                                placeNameList.add(placeName);
+                                placeNamesPerItinerary.put(itineraryIds.get(position), placeNameList);
+                            }
+
+                            //populate latitudes list
+                            if(latitudesPerItinerary.isEmpty()) {
+                                ArrayList<String> latitudeList = new ArrayList<>();
+                                latitudeList.add(map1.get("latitude").toString());
+                                latitudesPerItinerary.put(itineraryIds.get(position), latitudeList);
+                            }
+                            else {
+                                ArrayList<String> latitudeList = latitudesPerItinerary.get(itineraryIds.get(position));
+                                latitudeList.add(map1.get("latitude").toString());
+                                latitudesPerItinerary.put(itineraryIds.get(position), latitudeList);
+                            }
+
+                            //populate longitudes list
+                            if(longitudesPerItinerary.isEmpty()) {
+                                ArrayList<String> longitudeList = new ArrayList<>();
+                                longitudeList.add(map1.get("longitude").toString());
+                                longitudesPerItinerary.put(itineraryIds.get(position), longitudeList);
+                            }
+                            else {
+                                ArrayList<String> longitudeList = longitudesPerItinerary.get(itineraryIds.get(position));
+                                longitudeList.add(map1.get("longitude").toString());
+                                longitudesPerItinerary.put(itineraryIds.get(position), longitudeList);
+                            }
                         }
 
                         @Override
@@ -182,8 +199,11 @@ public class TabFragment extends Fragment implements AdapterView.OnItemClickList
         routeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =new Intent(getContext(),Home.class);
+                Intent i =new Intent(getContext(),MapsActivity.class);
                 i.putExtra("itineraryId",itineraryIds.get(position));
+                i.putStringArrayListExtra("placeNames", placeNamesPerItinerary.get(itineraryIds.get(position)));
+                i.putStringArrayListExtra("latitudes", latitudesPerItinerary.get(itineraryIds.get(position)));
+                i.putStringArrayListExtra("longitudes", longitudesPerItinerary.get(itineraryIds.get(position)));
                 startActivity(i);
 
             }
