@@ -51,15 +51,9 @@ public class MapsActivity extends AppCompatActivity
 
     private static final int COLOR_BLACK_ARGB = 0xff000000;
     private static final int POLYLINE_STROKE_WIDTH_PX = 5;
-    private static final int PATTERN_GAP_LENGTH_PX = 20;
-    private static final PatternItem DOT = new Dot();
-    private static final PatternItem GAP = new Gap(PATTERN_GAP_LENGTH_PX);
-    private static final List<PatternItem> PATTERN_POLYLINE_DOTTED = Arrays.asList(GAP, DOT);
 
     private static ArrayList<LatLng> positions = new ArrayList<>();
     private static ArrayList<String> positionsTitles = new ArrayList<>();
-
-    Firebase reference1,reference2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +66,6 @@ public class MapsActivity extends AppCompatActivity
         if(positionsTitles.size() > 0) positionsTitles = new ArrayList<>();
 
         Bundle extras = getIntent().getExtras();
-        String itineraryId = extras.getString("itineraryId");
         List<String> placeNameList = extras.getStringArrayList("placeNames");
         List<String> latitudeList = extras.getStringArrayList("latitudes");
         List<String> longitudeList = extras.getStringArrayList("longitudes");
@@ -90,19 +83,20 @@ public class MapsActivity extends AppCompatActivity
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-            Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
-                    .addAll(positions));
+        Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
+                .addAll(positions));
 
-            stylePolyline(polyline1);
+        stylePolyline(polyline1);
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+        googleMap.addMarker(new MarkerOptions().position(positions.get(0)));
 
         for (int i = 0; i < positions.size(); i++) {
 
             TextView text = new TextView(this);
             text.setText(positionsTitles.get(i));
             IconGenerator generator = new IconGenerator(this);
-//        generator.setBackground(this.getDrawable(R.drawable.bubble_mask));
             generator.setContentView(text);
             Bitmap icon = generator.makeIcon();
 
@@ -157,11 +151,6 @@ public class MapsActivity extends AppCompatActivity
 
     @Override
     public void onPolylineClick(Polyline polyline) {
-        if ((polyline.getPattern() == null) || (!polyline.getPattern().contains(DOT))) {
-            polyline.setPattern(PATTERN_POLYLINE_DOTTED);
-        } else {
-            polyline.setPattern(null);
-        }
     }
 
 }
