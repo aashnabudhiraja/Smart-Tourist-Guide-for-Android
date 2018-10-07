@@ -115,8 +115,8 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
         List<String> place2 = new ArrayList<>();
         List<String> place3 = new ArrayList<>();
         place0.add("-LNqYJ6J_Le9m3AjpG31");
-        place0.add("-LNqcIB3OkjLGJmXFqjw");
         place0.add("-LNqcIBfpDOoRWO1VS8d");
+        place0.add("-LNqcIB3OkjLGJmXFqjw");
 
         place1.add("-LNqcIBhh5lavC3NShQs");
         place1.add("-LNqcIBhh5lavC3NShQt");
