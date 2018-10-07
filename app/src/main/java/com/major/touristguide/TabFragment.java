@@ -114,6 +114,10 @@ public class TabFragment extends Fragment implements AdapterView.OnItemClickList
 
         reference1 = new Firebase("https://tourist-guide-fd1e1.firebaseio.com/itinerary");
 
+        final ProgressDialog pd = new ProgressDialog(getContext());
+        pd.setMessage("Loading...");
+        pd.show();
+
         reference1.child(itineraryIds.get(position)).addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -182,6 +186,8 @@ public class TabFragment extends Fragment implements AdapterView.OnItemClickList
                         }
                     });
                 }
+
+                pd.dismiss();
             }
 
             @Override

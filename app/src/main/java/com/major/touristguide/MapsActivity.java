@@ -59,6 +59,7 @@ public class MapsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         System.out.println("Start");
 
@@ -151,6 +152,12 @@ public class MapsActivity extends AppCompatActivity
 
     @Override
     public void onPolylineClick(Polyline polyline) {
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 
 }

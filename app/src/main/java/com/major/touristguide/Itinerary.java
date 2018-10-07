@@ -1,11 +1,18 @@
 package com.major.touristguide;
 
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
+import android.view.Window;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +30,9 @@ public class Itinerary extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itinerary);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Itinerary");
+
         Bundle extras = getIntent().getExtras();
         itineraryIds = (ArrayList<String>)getIntent().getSerializableExtra("itineraryIds");
         System.out.println("array"+itineraryIds);
@@ -38,10 +48,6 @@ public class Itinerary extends AppCompatActivity {
         String title[] = new String[day];
         for(int i=1;i<=day;i++)
             title[i-1]="Day"+i;
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(),title,itineraryIds);
@@ -50,4 +56,5 @@ public class Itinerary extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
     }
+
 }
