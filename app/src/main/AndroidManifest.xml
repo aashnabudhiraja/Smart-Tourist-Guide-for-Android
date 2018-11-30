@@ -43,6 +43,7 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".Itinerary" />
+        <activity android:name=".MainHome"></activity>
     </application>
 
 </manifest>

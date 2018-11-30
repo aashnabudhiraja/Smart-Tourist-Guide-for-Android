@@ -57,4 +57,13 @@ public class Itinerary extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(Itinerary.this, MainHome.class));
+        finish();
+
+    }
+
 }

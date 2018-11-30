@@ -52,7 +52,7 @@ public class Login extends AppCompatActivity {
         sp = getSharedPreferences("login",MODE_PRIVATE);
 
         if(sp.getBoolean("logged",false)){
-            Intent intent = new Intent(Login.this, Home.class);
+            Intent intent = new Intent(Login.this, MainHome.class);
             startActivity(intent);
             finish();
         }
@@ -106,7 +106,7 @@ public class Login extends AppCompatActivity {
                                         Toast.makeText(Login.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     }
                                 } else {
-                                    Intent intent = new Intent(Login.this, Home.class);
+                                    Intent intent = new Intent(Login.this, MainHome.class);
                                     startActivity(intent);
                                     sp.edit().putBoolean("logged",true).apply();
                                     finish();
