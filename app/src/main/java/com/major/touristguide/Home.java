@@ -98,6 +98,13 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
                         editor.clear();
                         editor.commit();
                         startActivity(new Intent(Home.this, Login.class));
+                        finish();
+                        return true;
+                    }
+
+                    case R.id.home: {
+                        startActivity(new Intent(Home.this,MainHome.class));
+                        finish();
                         return true;
                     }
                     default:
@@ -140,6 +147,7 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
         fromDateEtxt = (EditText) findViewById(R.id.etxt_fromdate);
         toDateEtxt = (EditText) findViewById(R.id.etxt_todate);
         confirm = (Button) findViewById(R.id.confirmButton);
+        destination = (Spinner) findViewById(R.id.destination);
 
         fromDateEtxt.setInputType(InputType.TYPE_NULL);
         fromDateEtxt.requestFocus();
@@ -189,6 +197,7 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
 
                 String fromDateString = fromDateEtxt.getText().toString();
                 String toDateString = toDateEtxt.getText().toString();
+                String destinationText = destination.getSelectedItem().toString();
                 if (TextUtils.isEmpty(fromDateString)) {
                     Toast.makeText(getApplicationContext(), "Enter From Date", Toast.LENGTH_SHORT).show();
                     return;
@@ -253,6 +262,7 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
                 map.put("endDate",toDateString);
                 map.put("totalDays", Long.toString(days));
                 map.put("User UID", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                map.put("destination", destinationText);
 
                 reference1 = new Firebase("https://tourist-guide-fd1e1.firebaseio.com/trips");
                 String tripId = reference1.push().getKey();
@@ -273,6 +283,7 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
                 System.out.println("array value"+itineraryIds);
                 i.putExtra("itineraryIds",(Serializable)itineraryIds);
                 startActivity(i);
+                finish();
 
 
             }
