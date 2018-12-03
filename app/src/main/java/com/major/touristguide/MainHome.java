@@ -33,6 +33,9 @@ import java.util.Map;
 
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class MainHome extends AppCompatActivity {
 
     private static final String TAG = MainHome.class.getSimpleName();
@@ -134,13 +137,13 @@ public class MainHome extends AppCompatActivity {
                         long diff1 = endDate.getTime() - now1.getTime();
 
                         if(diff1<0 ){
-                            previousTrips.add(new ItemObject("Previous Trip ", ds.getKey(),map.get("totalDays").toString()));
+                            previousTrips.add(new ItemObject("Previous Trip ", ds.getKey(),map.get("totalDays").toString(), map.get("startDate").toString()));
                         }
                         if(diff1>=0&&diff<=0){
-                            currentTrips.add(new ItemObject("Current Trip \nDestination: "+map.get("destination")+"\nStart Date: "+map.get("startDate"), ds.getKey(), map.get("totalDays").toString()));
+                            currentTrips.add(new ItemObject("Current Trip \nDestination: "+map.get("destination")+"\nStart Date: "+map.get("startDate"), ds.getKey(), map.get("totalDays").toString(),  map.get("startDate").toString()));
                         }
                         if(diff1>0&&diff>0){
-                            futureTrips.add(new ItemObject("Future Trip \nDestination: "+map.get("destination")+"\nStart Date: "+map.get("startDate"), ds.getKey(), map.get("totalDays").toString()));
+                            futureTrips.add(new ItemObject("Future Trip \nDestination: "+map.get("destination")+"\nStart Date: "+map.get("startDate"), ds.getKey(), map.get("totalDays").toString(),  map.get("startDate").toString()));
                         }
                        // if(map.get("startDate").toString())
                         System.out.println("map " + map);
@@ -155,7 +158,7 @@ public class MainHome extends AppCompatActivity {
                 HeaderRecyclerViewSection createSection = new HeaderRecyclerViewSection("Create New Trip",getDataSource());
                 HeaderRecyclerViewSection firstSection = new HeaderRecyclerViewSection("Future Trips", futureTrips);
                 HeaderRecyclerViewSection secondSection = new HeaderRecyclerViewSection("Current Trips", currentTrips);
-                HeaderRecyclerViewSection thirdSection = new HeaderRecyclerViewSection("Trips History", previousTrips.subList(10,15));
+                HeaderRecyclerViewSection thirdSection = new HeaderRecyclerViewSection("Trips History", previousTrips.subList(0, min(max(0,previousTrips.size()-1), 5)));
                 sectionAdapter = new SectionedRecyclerViewAdapter();
                 sectionAdapter.addSection(createSection);
                 sectionAdapter.addSection(firstSection);
@@ -174,7 +177,7 @@ public class MainHome extends AppCompatActivity {
 
     private List<ItemObject> getDataSource(){
         List<ItemObject> data = new ArrayList<ItemObject>();
-        data.add(new ItemObject("Create New Trip", "Trip", "One"));
+        data.add(new ItemObject("Create New Trip", "Trip", "One","Date" ));
         return data;
     }
 

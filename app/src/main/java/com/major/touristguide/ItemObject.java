@@ -4,10 +4,12 @@ public class ItemObject {
     private String contents;
     private String id;
     private String days;
-    public ItemObject(String contents, String id, String days) {
+    private String startDate;
+    public ItemObject(String contents, String id, String days, String startDate) {
         this.contents = contents;
         this.id = id;
         this.days = days;
+        this.startDate = startDate;
     }
     public String getContents() {
         return contents;
@@ -20,4 +22,6 @@ public class ItemObject {
     public String getDays() {
         return days;
     }
+
+    public String getStartDate() { return startDate;}
 }

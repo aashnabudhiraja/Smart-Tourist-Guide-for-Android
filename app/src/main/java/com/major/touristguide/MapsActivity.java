@@ -1,6 +1,7 @@
 package com.major.touristguide;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -8,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -80,21 +82,35 @@ public class MapsActivity extends AppCompatActivity
         if (positions.size() > 0) positions = new ArrayList<>();
         if (positionsTitles.size() > 0) positionsTitles = new ArrayList<>();
 
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("Creating Route...");
+        pd.show();
+
         Bundle extras = getIntent().getExtras();
-        List<String> placeNameList = extras.getStringArrayList("placeNames");
-        List<String> latitudeList = extras.getStringArrayList("latitudes");
-        List<String> longitudeList = extras.getStringArrayList("longitudes");
+        final List<String> placeNameList = extras.getStringArrayList("placeNames");
+        final List<String> latitudeList = extras.getStringArrayList("latitudes");
+        final List<String> longitudeList = extras.getStringArrayList("longitudes");
 
-        for (int i = 0; i < placeNameList.size(); i++) {
-            positionsTitles.add(placeNameList.get(i));
-            positions.add(new LatLng(Double.parseDouble(latitudeList.get(i)), Double.parseDouble(longitudeList.get(i))));
-        }
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Do something after 5s = 5000ms
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(map);
-        mapFragment.getMapAsync(this);
+                for (int i = 0; i < placeNameList.size(); i++) {
+                    positionsTitles.add(placeNameList.get(i));
+                    positions.add(new LatLng(Double.parseDouble(latitudeList.get(i)), Double.parseDouble(longitudeList.get(i))));
+                }
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+                SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                        .findFragmentById(map);
+                mapFragment.getMapAsync(MapsActivity.this);
+
+                mFusedLocationClient = LocationServices.getFusedLocationProviderClient(MapsActivity.this);
+                pd.dismiss();
+
+            }
+        }, 1000*placeNameList.size());
 
     }
 

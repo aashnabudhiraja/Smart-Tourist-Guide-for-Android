@@ -196,6 +196,7 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
                 List<String> itineraryIds = new ArrayList<>();
 
                 String fromDateString = fromDateEtxt.getText().toString();
+                System.out.println("real value"+fromDateString);
                 String toDateString = toDateEtxt.getText().toString();
                 String destinationText = destination.getSelectedItem().toString();
                 if (TextUtils.isEmpty(fromDateString)) {
@@ -279,9 +280,13 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
 
 
                 Intent i = new Intent(Home.this, Itinerary.class);
+                i.putExtra("startDate",fromDateString);
+                System.out.println("home"+fromDateString);
+//                i.putExtra("startDateCalendar",fromDate);
                 i.putExtra("days",Long.toString(days));
                 System.out.println("array value"+itineraryIds);
                 i.putExtra("itineraryIds",(Serializable)itineraryIds);
+
                 startActivity(i);
                 finish();
 
