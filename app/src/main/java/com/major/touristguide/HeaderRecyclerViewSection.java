@@ -30,6 +30,7 @@ public class HeaderRecyclerViewSection extends StatelessSection {
     private List<ItemObject> list;
     private String days;
     private List<String> itinerarys = new ArrayList<>();
+    private String startDate;
     private Context mContext;
     Firebase reference1;
     public HeaderRecyclerViewSection(String title, List<ItemObject> list) {
@@ -81,6 +82,8 @@ public class HeaderRecyclerViewSection extends StatelessSection {
                             }
 
                             Intent i = new Intent(view.getContext(), Itinerary.class);
+                            i.putExtra("startDate",list.get(position).getStartDate());
+                           //System.out.println("home"+fromDateString);
                             i.putExtra("days", list.get(position).getDays());
                             System.out.println("array value" + itinerarys);
                             i.putExtra("itineraryIds", (Serializable) itinerarys);

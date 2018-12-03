@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class Itinerary extends AppCompatActivity {
@@ -49,8 +50,10 @@ public class Itinerary extends AppCompatActivity {
         for(int i=1;i<=day;i++)
             title[i-1]="Day"+i;
 
+        String startDate = extras.getString("startDate");
+        System.out.println("Itinerary" + startDate);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(),title,itineraryIds);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(),title,itineraryIds, startDate);
         viewPager.setAdapter(adapter);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -65,5 +68,6 @@ public class Itinerary extends AppCompatActivity {
         finish();
 
     }
+
 
 }
