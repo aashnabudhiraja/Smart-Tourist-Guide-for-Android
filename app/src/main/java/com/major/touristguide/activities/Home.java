@@ -1,9 +1,7 @@
-package com.major.touristguide;
+package com.major.touristguide.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v4.widget.TextViewCompat;
-import android.support.v7.app.ActionBar;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -15,7 +13,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,10 +26,9 @@ import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.major.touristguide.R;
 
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,7 +38,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 public class Home extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     private Spinner destination;

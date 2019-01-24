@@ -2,27 +2,23 @@ package com.major.touristguide;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.google.firebase.auth.FirebaseAuth;
+import com.major.touristguide.activities.Home;
+import com.major.touristguide.activities.Itinerary;
+import com.major.touristguide.models.ItemObject;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 public class HeaderRecyclerViewSection extends StatelessSection {
     private static final String TAG = HeaderRecyclerViewSection.class.getSimpleName();

@@ -24,27 +24,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Login">
+        <activity android:name=".activities.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Signup" />
-        <activity android:name=".ResetPassword" />
-        <activity android:name=".Home" />
+        <activity android:name=".activities.Signup" />
+        <activity android:name=".activities.ResetPassword" />
+        <activity android:name=".activities.Home" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".activities.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".Itinerary" />
-        <activity android:name=".MainHome"></activity>
-        <activity android:name=".ItineraryEdit"></activity>
+        <activity android:name=".activities.Itinerary" />
+        <activity android:name=".activities.MainHome"></activity>
+        <activity android:name=".activities.ItineraryEdit"></activity>
     </application>
 
 </manifest>

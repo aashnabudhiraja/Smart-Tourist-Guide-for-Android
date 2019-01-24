@@ -1,4 +1,4 @@
-package com.major.touristguide;
+package com.major.touristguide.models;
 
 public class EditItem {
     private String placeId;

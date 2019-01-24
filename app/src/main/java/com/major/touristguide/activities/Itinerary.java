@@ -1,21 +1,16 @@
-package com.major.touristguide;
+package com.major.touristguide.activities;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.MenuItem;
-import android.view.Window;
+
+import com.major.touristguide.R;
+import com.major.touristguide.ViewPagerAdapter;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class Itinerary extends AppCompatActivity {

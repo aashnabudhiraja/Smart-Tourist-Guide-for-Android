@@ -10,7 +10,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="4dp"
-    tools:context="com.major.touristguide.MainHome">
+    tools:context="com.major.touristguide.activities.MainHome">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/add_header"
         android:layout_width="match_parent"

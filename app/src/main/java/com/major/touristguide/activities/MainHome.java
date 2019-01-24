@@ -1,9 +1,8 @@
-package com.major.touristguide;
+package com.major.touristguide.activities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.DatabaseErrorHandler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -21,6 +20,9 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.major.touristguide.HeaderRecyclerViewSection;
+import com.major.touristguide.R;
+import com.major.touristguide.models.ItemObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
