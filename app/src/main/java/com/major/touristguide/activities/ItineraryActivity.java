@@ -13,7 +13,7 @@ import com.major.touristguide.ViewPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Itinerary extends AppCompatActivity {
+public class ItineraryActivity extends AppCompatActivity {
 
     private android.support.v7.widget.Toolbar toolbar;
     private TabLayout tabLayout;
@@ -59,7 +59,7 @@ public class Itinerary extends AppCompatActivity {
     public void onBackPressed()
     {
         super.onBackPressed();
-        startActivity(new Intent(Itinerary.this, MainHome.class));
+        startActivity(new Intent(ItineraryActivity.this, MainHome.class));
         finish();
 
     }

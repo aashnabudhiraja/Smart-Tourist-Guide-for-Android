@@ -5,12 +5,12 @@ import com.google.android.gms.maps.model.Marker;
 
 public class Destination {
 
-    private Marker marker;
     private LatLng pos;
+    private String name;
 
-    public Destination(Marker marker) {
-        this.marker = marker;
-        this.pos = marker.getPosition();
+    public Destination(long latitude, long longitude, String name) {
+        this.pos = new LatLng(latitude, longitude);
+        this.name = name;
     }
 
     // direct distance ------ distance by roads??
@@ -31,15 +31,11 @@ public class Destination {
         return Radius * c;
     }
 
-    public Marker getMarker() {
-        return marker;
-    }
-
     public LatLng getLatLng() { return pos; }
 
     @Override
     public String toString(){
-        return String.valueOf(marker.getPosition().latitude) + ", " + String.valueOf(marker.getPosition().longitude);
+        return String.valueOf(pos.latitude) + ", " + String.valueOf(pos.longitude);
     }
 
 

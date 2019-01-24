@@ -67,9 +67,9 @@ public class MapsActivity extends AppCompatActivity
         if (positions.size() > 0) positions = new ArrayList<>();
         if (positionsTitles.size() > 0) positionsTitles = new ArrayList<>();
 
-        final ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Creating Route...");
-        pd.show();
+//        final ProgressDialog pd = new ProgressDialog(this);
+//        pd.setMessage("Creating Route...");
+//        pd.show();
 
         Bundle extras = getIntent().getExtras();
         final List<String> placeNameList = extras.getStringArrayList("placeNames");
@@ -92,7 +92,7 @@ public class MapsActivity extends AppCompatActivity
                 mapFragment.getMapAsync(MapsActivity.this);
 
                 mFusedLocationClient = LocationServices.getFusedLocationProviderClient(MapsActivity.this);
-                pd.dismiss();
+//                pd.dismiss();
 
             }
         }, 1000*placeNameList.size());

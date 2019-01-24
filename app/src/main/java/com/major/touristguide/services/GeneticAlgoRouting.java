@@ -2,10 +2,11 @@ package com.major.touristguide.services;
 
 import android.content.SharedPreferences;
 
+import com.major.touristguide.models.Itinerary;
 import com.major.touristguide.models.Population;
 import com.major.touristguide.models.Route;
 
-public class GeneticAlgorithmRouting {
+public class GeneticAlgoRouting {
 
     /* GA parameters */
     private static float mutationRate;
@@ -16,13 +17,13 @@ public class GeneticAlgorithmRouting {
 
 
     // Evolves a population over one generation
-    public static Population evolvePopulation(Population pop, SharedPreferences pref) {
+    public static Population evolvePopulation(Population pop, SharedPreferences pref, Itinerary currentItinerary) {
 
         mutationRate = Float.parseFloat(pref.getString("muteRate", "0.025f"));
         crossoverRate = Float.parseFloat(pref.getString("crossRate", "0.5f"));
         elitism = Boolean.parseBoolean(pref.getString("elitism", "true"));
 
-        Population newPopulation = new Population(pop.populationSize(), false);
+        Population newPopulation = new Population(pop.populationSize(), false, currentItinerary);
 
         // Keep our best individual if elitism is enabled
         int elitismOffset = 0;
@@ -36,13 +37,13 @@ public class GeneticAlgorithmRouting {
         // Current population
         for (int i = elitismOffset; i < newPopulation.populationSize(); i++) {
             // Select parents
-            Route parent1 = tournamentSelection(pop);
-            Route parent2 = tournamentSelection(pop);
+            Route parent1 = tournamentSelection(pop, currentItinerary);
+            Route parent2 = tournamentSelection(pop, currentItinerary);
 
             Route child;
             if (Math.random() <= crossoverRate) {
                 // Crossover parents
-                child = crossover(parent1, parent2);
+                child = crossover(parent1, parent2, currentItinerary);
             } else {
                 child = new Route(parent1);
             }
@@ -60,9 +61,9 @@ public class GeneticAlgorithmRouting {
     }
 
     // Applies crossover to a set of parents and creates offspring
-    public static Route crossover(Route parent1, Route parent2) {
+    public static Route crossover(Route parent1, Route parent2, Itinerary itinerary) {
         // Create new child route
-        Route child = new Route();
+        Route child = new Route(itinerary);
 
         // Get start and end sub route positions for parent1's route
         int startPos = (int) (Math.random() * parent1.routeSize());
@@ -111,9 +112,9 @@ public class GeneticAlgorithmRouting {
     }
 
     // Selects candidate route for crossover
-    private static Route tournamentSelection(Population pop) {
+    private static Route tournamentSelection(Population pop, Itinerary itinerary) {
         // Create a tournament population
-        Population tournament = new Population(tournamentSize, false);
+        Population tournament = new Population(tournamentSize, false, itinerary);
         // For each place in the tournament get a random candidate route and
         // add it
         for (int i = 0; i < tournamentSize; i++) {

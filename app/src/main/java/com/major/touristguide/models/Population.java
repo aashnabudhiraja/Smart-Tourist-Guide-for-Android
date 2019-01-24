@@ -2,18 +2,18 @@ package com.major.touristguide.models;
 
 public class Population {
 
-    // Holds population of tours
+    // Holds population of routes
     Route[] routes;
 
     // Construct a population
-    public Population(int populationSize, boolean initialise) {
+    public Population(int populationSize, boolean initialise, Itinerary itinerary) {
         routes = new Route[populationSize];
         // If we need to initialise a population of routes do so
         if (initialise) {
             // Loop and create individuals
             for (int i = 0; i < populationSize; i++) {
-                Route newRoute = new Route();
-                newRoute.generateIndividual();
+                Route newRoute = new Route(itinerary);
+                newRoute.generateIndividual(itinerary);
                 saveRoute(i, newRoute);
             }
         }

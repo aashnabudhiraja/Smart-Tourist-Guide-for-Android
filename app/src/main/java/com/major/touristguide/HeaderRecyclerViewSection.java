@@ -10,8 +10,8 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.major.touristguide.activities.Home;
-import com.major.touristguide.activities.Itinerary;
+import com.major.touristguide.activities.HomeActivity;
+import com.major.touristguide.activities.ItineraryActivity;
 import com.major.touristguide.models.ItemObject;
 
 import java.io.Serializable;
@@ -55,7 +55,7 @@ public class HeaderRecyclerViewSection extends StatelessSection {
             public void onClick(final View view) {
                 Firebase.setAndroidContext(view.getContext());
                 if(title.equals("Create New Trip")){
-                    Intent intent = new Intent(view.getContext(), Home.class);
+                    Intent intent = new Intent(view.getContext(), HomeActivity.class);
                     view.getContext().startActivity(intent);
                 }
 
@@ -77,7 +77,7 @@ public class HeaderRecyclerViewSection extends StatelessSection {
                                 }
                             }
 
-                            Intent i = new Intent(view.getContext(), Itinerary.class);
+                            Intent i = new Intent(view.getContext(), ItineraryActivity.class);
                             i.putExtra("startDate",list.get(position).getStartDate());
                            //System.out.println("home"+fromDateString);
                             i.putExtra("days", list.get(position).getDays());

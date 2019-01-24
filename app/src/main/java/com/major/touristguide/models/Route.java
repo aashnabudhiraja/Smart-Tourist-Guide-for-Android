@@ -1,7 +1,5 @@
 package com.major.touristguide.models;
 
-import com.major.touristguide.services.RouteManager;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -14,23 +12,22 @@ public class Route {
     private double fitness = 0;
 
     // Construct a blank route
-    public Route() {
-        for (int i = 0; i < RouteManager.numberOfDestinations(); i++) {
+    public Route(Itinerary itinerary) {
+        for (int i = 0; i < itinerary.numberOfDestinations(); i++) {
             route.add(null);
         }
     }
 
     // Constructs a route from another route
-    @SuppressWarnings("unchecked")
     public Route(Route someRoute){
         this.route = (ArrayList<Destination>) someRoute.route.clone();
     }
 
     // generate a random route
-    public void generateIndividual() {
+    public void generateIndividual(Itinerary itinerary) {
         // Loop through all our destinations in TM and add them to our route -- shallow copy
-        for (int index = 0; index < RouteManager.numberOfDestinations(); index++) {
-            setDestination(index, RouteManager.getDestination(index));
+        for (int index = 0; index < itinerary.numberOfDestinations(); index++) {
+            setDestination(index, itinerary.getDestination(index));
         }
         // Randomly reorder the route
         Collections.shuffle(route);

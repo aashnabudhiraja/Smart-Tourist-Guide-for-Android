@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class Home extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     private Spinner destination;
 
     private EditText fromDateEtxt;
@@ -92,13 +92,13 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.clear();
                         editor.commit();
-                        startActivity(new Intent(Home.this, Login.class));
+                        startActivity(new Intent(HomeActivity.this, Login.class));
                         finish();
                         return true;
                     }
 
                     case R.id.home: {
-                        startActivity(new Intent(Home.this,MainHome.class));
+                        startActivity(new Intent(HomeActivity.this,MainHome.class));
                         finish();
                         return true;
                     }
@@ -274,7 +274,7 @@ public class Home extends AppCompatActivity implements AdapterView.OnItemSelecte
                 }
 
 
-                Intent i = new Intent(Home.this, Itinerary.class);
+                Intent i = new Intent(HomeActivity.this, ItineraryActivity.class);
                 i.putExtra("startDate",fromDateString);
                 System.out.println("home"+fromDateString);
 //                i.putExtra("startDateCalendar",fromDate);

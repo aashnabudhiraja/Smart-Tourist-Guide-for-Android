@@ -18,6 +18,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.major.touristguide.activities.ItineraryEdit;
 import com.major.touristguide.activities.MapsActivity;
+import com.major.touristguide.activities.Routing;
 import com.major.touristguide.models.RowItem;
 
 import java.text.ParseException;
@@ -272,7 +273,7 @@ public class TabFragment extends Fragment implements AdapterView.OnItemClickList
         routeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =new Intent(getContext(),MapsActivity.class);
+                Intent i = new Intent(getContext(),Routing.class);
                 i.putExtra("itineraryId",itineraryIds.get(position));
                 i.putStringArrayListExtra("placeNames", placeNamesPerItinerary.get(itineraryIds.get(position)));
                 i.putStringArrayListExtra("latitudes", latitudesPerItinerary.get(itineraryIds.get(position)));

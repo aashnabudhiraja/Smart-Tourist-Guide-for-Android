@@ -33,7 +33,7 @@
         </activity>
         <activity android:name=".activities.Signup" />
         <activity android:name=".activities.ResetPassword" />
-        <activity android:name=".activities.Home" />
+        <activity android:name=".activities.HomeActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -42,9 +42,10 @@
         <activity
             android:name=".activities.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".activities.Itinerary" />
-        <activity android:name=".activities.MainHome"></activity>
-        <activity android:name=".activities.ItineraryEdit"></activity>
+        <activity android:name=".activities.ItineraryActivity" />
+        <activity android:name=".activities.MainHome" />
+        <activity android:name=".activities.ItineraryEdit" />
+        <activity android:name=".activities.Routing"></activity>
     </application>
 
 </manifest>

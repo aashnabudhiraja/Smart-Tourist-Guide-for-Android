@@ -1,15 +1,13 @@
-package com.major.touristguide.services;
+package com.major.touristguide.models;
 
-
-import com.google.android.gms.maps.model.Marker;
 import com.major.touristguide.models.Destination;
 
 import java.util.ArrayList;
 
-public class RouteManager {
+public class Itinerary {
 
     //List of Destinations
-    private static ArrayList<Destination> destinations = new ArrayList<Destination>();
+    public static ArrayList<Destination> destinations = new ArrayList<Destination>();
 
     public  static void addDestination(Destination destination) {
         destinations.add(destination);
@@ -21,11 +19,6 @@ public class RouteManager {
     }
 
     public static void removeAll() {
-
-        for (Destination D: destinations) {
-            Marker marker = D.getMarker();
-            marker.remove();
-        }
         destinations = new ArrayList<Destination>();
     }
 
