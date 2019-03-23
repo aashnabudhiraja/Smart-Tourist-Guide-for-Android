@@ -18,7 +18,9 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.major.touristguide.activities.ItineraryEdit;
 import com.major.touristguide.activities.MapsActivity;
+import com.major.touristguide.activities.PlaceRating;
 import com.major.touristguide.activities.Routing;
+import com.major.touristguide.models.PlaceItem;
 import com.major.touristguide.models.RowItem;
 
 import java.text.ParseException;
@@ -67,30 +69,6 @@ public class TabFragment extends Fragment implements AdapterView.OnItemClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         position = getArguments().getInt("pos");
-
-        List<String> place0 = new ArrayList<>();
-        List<String> place1 = new ArrayList<>();
-        List<String> place2 = new ArrayList<>();
-        List<String> place3 = new ArrayList<>();
-        place0.add("10:00");
-        place0.add("2:00");
-        place0.add("5:00");
-
-        place1.add("10:00");
-        place1.add("1:30");
-        place1.add("4:00");
-        place1.add("6:00");
-
-        place2.add("10:00");
-        place2.add("1:00");
-        place2.add("4:00");
-
-        place3.add("10:00");
-        place3.add("4:00");
-        placesList.add(place0);
-        placesList.add(place1);
-        placesList.add(place2);
-        placesList.add(place3);
 
     }
 
@@ -147,9 +125,9 @@ public class TabFragment extends Fragment implements AdapterView.OnItemClickList
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             Map map1 = dataSnapshot.getValue(Map.class);
                             String placeName = map1.get("placeName").toString();
-                            String openTime = map1.get("openTime").toString();
-                            String closeTime = map1.get("closeTime").toString();
-                            rowItems.add(new RowItem(placesList.get(position).get(j), placeName, "Place Opens at "+openTime+"\nCloses at "+closeTime));
+                            String openTime = map1.get("Open Time").toString();
+                            String closeTime = map1.get("Close Time").toString();
+                            rowItems.add(new RowItem(placeIds.get(j), placeName, "Place Opens at "+openTime+"\nCloses at "+closeTime));
                             CustomBaseAdapter adapter = new CustomBaseAdapter(getContext(), rowItems);
                             listView.setAdapter(adapter);
 
@@ -180,48 +158,48 @@ public class TabFragment extends Fragment implements AdapterView.OnItemClickList
                             //populate open list
                             if(openPerItinerary.isEmpty()) {
                                 ArrayList<String> openList = new ArrayList<>();
-                                openList.add(map1.get("openTime").toString());
+                                openList.add(map1.get("Open Time").toString());
                                 openPerItinerary.put(itineraryIds.get(position), openList);
                             }
                             else {
                                 ArrayList<String> openList = openPerItinerary.get(itineraryIds.get(position));
-                                openList.add(map1.get("openTime").toString());
+                                openList.add(map1.get("Open Time").toString());
                                 openPerItinerary.put(itineraryIds.get(position), openList);
                             }
 
                             //populate close list
                             if(closePerItinerary.isEmpty()) {
                                 ArrayList<String> closeList = new ArrayList<>();
-                                closeList.add(map1.get("closeTime").toString());
+                                closeList.add(map1.get("Close Time").toString());
                                 closePerItinerary.put(itineraryIds.get(position), closeList);
                             }
                             else {
                                 ArrayList<String> closeList = closePerItinerary.get(itineraryIds.get(position));
-                                closeList.add(map1.get("closeTime").toString());
+                                closeList.add(map1.get("Close Time").toString());
                                 closePerItinerary.put(itineraryIds.get(position), closeList);
                             }
 
                             //populate latitudes list
                             if(latitudesPerItinerary.isEmpty()) {
                                 ArrayList<String> latitudeList = new ArrayList<>();
-                                latitudeList.add(map1.get("latitude").toString());
+                                latitudeList.add(map1.get("Lat").toString());
                                 latitudesPerItinerary.put(itineraryIds.get(position), latitudeList);
                             }
                             else {
                                 ArrayList<String> latitudeList = latitudesPerItinerary.get(itineraryIds.get(position));
-                                latitudeList.add(map1.get("latitude").toString());
+                                latitudeList.add(map1.get("Lat").toString());
                                 latitudesPerItinerary.put(itineraryIds.get(position), latitudeList);
                             }
 
                             //populate longitudes list
                             if(longitudesPerItinerary.isEmpty()) {
                                 ArrayList<String> longitudeList = new ArrayList<>();
-                                longitudeList.add(map1.get("longitude").toString());
+                                longitudeList.add(map1.get("Long").toString());
                                 longitudesPerItinerary.put(itineraryIds.get(position), longitudeList);
                             }
                             else {
                                 ArrayList<String> longitudeList = longitudesPerItinerary.get(itineraryIds.get(position));
-                                longitudeList.add(map1.get("longitude").toString());
+                                longitudeList.add(map1.get("Long").toString());
                                 longitudesPerItinerary.put(itineraryIds.get(position), longitudeList);
                             }
                         }
@@ -304,7 +282,14 @@ public class TabFragment extends Fragment implements AdapterView.OnItemClickList
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
-        System.out.println("worked");
+        RowItem placeSelected = (RowItem)parent.getItemAtPosition(position);
+        //System.out.println("Place selected"+ placeSelected.getPlaceId());
+
+        Intent intent = new Intent(getContext(), PlaceRating.class);
+        intent.putExtra("placeId",placeSelected.getTiming());
+        intent.putExtra("placeName",placeSelected.getTitle());
+        startActivity(intent);
+
+    }
     }
 
-}

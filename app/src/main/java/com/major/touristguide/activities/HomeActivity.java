@@ -112,29 +112,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
         final List<List<String>> placesList = new ArrayList<>();
 
-        List<String> place0 = new ArrayList<>();
-        List<String> place1 = new ArrayList<>();
-        List<String> place2 = new ArrayList<>();
-        List<String> place3 = new ArrayList<>();
-        place0.add("-LNqYJ6J_Le9m3AjpG31");
-        place0.add("-LNqcIBfpDOoRWO1VS8d");
-        place0.add("-LNqcIB3OkjLGJmXFqjw");
-
-        place1.add("-LNqcIBhh5lavC3NShQs");
-        place1.add("-LNqcIBhh5lavC3NShQt");
-        place1.add("-LNqcIBiF65WyfdCMt8j");
-        place1.add("-LNqcIBlziJ-qZ2NsQ89");
-
-        place2.add("-LNqcIBjeodYIQP-Df91");
-        place2.add("-LNqcIBlziJ-qZ2NsQ8A");
-        place2.add("-LNqcIBkjkZpoKasH8LN");
-
-        place3.add("-LNqcIBmg5DSJiROobmh");
-        place3.add("-LNqcIBmg5DSJiROobmg");
-        placesList.add(place0);
-        placesList.add(place1);
-        placesList.add(place2);
-        placesList.add(place3);
 
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
 
@@ -155,6 +132,10 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
         List<String> dest = new ArrayList<>();
         dest.add("Chandigarh");
+        dest.add("Delhi");
+        dest.add("Mumbai");
+        dest.add("Bangalore");
+        dest.add("Kolkata");
 
         ArrayAdapter<String> destAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dest);
         destAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -194,6 +175,140 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 System.out.println("real value"+fromDateString);
                 String toDateString = toDateEtxt.getText().toString();
                 String destinationText = destination.getSelectedItem().toString();
+                if(destinationText.equals("Chandigarh")){
+                    List<String> place0 = new ArrayList<>();
+                    List<String> place1 = new ArrayList<>();
+                    List<String> place2 = new ArrayList<>();
+                    List<String> place3 = new ArrayList<>();
+                    place0.add("1");
+                    place0.add("2");
+                    place0.add("3");
+
+                    place1.add("4");
+                    place1.add("6");
+                    place1.add("5");
+                    place1.add("9");
+
+                    place2.add("10");
+                    place2.add("8");
+                    place2.add("7");
+
+                    place3.add("11");
+                    place3.add("12");
+                    placesList.add(place0);
+                    placesList.add(place1);
+                    placesList.add(place2);
+                    placesList.add(place3);
+                }
+
+                else if (destinationText.equals("Delhi")){
+                    List<String> place0 = new ArrayList<>();
+                    List<String> place1 = new ArrayList<>();
+                    List<String> place2 = new ArrayList<>();
+                    List<String> place3 = new ArrayList<>();
+                    place0.add("13");
+                    place0.add("16");
+                    place0.add("24");
+
+                    place1.add("14");
+                    place1.add("22");
+                    place1.add("17");
+
+                    place2.add("20");
+                    place2.add("23");
+                    place2.add("21");
+
+                    place3.add("19");
+                    place3.add("15");
+                    place3.add("18");
+                    placesList.add(place0);
+                    placesList.add(place1);
+                    placesList.add(place2);
+                    placesList.add(place3);
+
+                }
+
+                else if(destinationText.equals("Mumbai")){
+                    List<String> place0 = new ArrayList<>();
+                    List<String> place1 = new ArrayList<>();
+                    List<String> place2 = new ArrayList<>();
+                    List<String> place3 = new ArrayList<>();
+                    place0.add("25");
+                    place0.add("26");
+                    place0.add("30");
+                    place0.add("27");
+
+                    place1.add("28");
+                    place1.add("29");
+                    place1.add("31");
+                    place1.add("32");
+
+                    place2.add("33");
+
+                    place3.add("34");
+                    placesList.add(place0);
+                    placesList.add(place1);
+                    placesList.add(place2);
+                    placesList.add(place3);
+
+                }
+
+                else if(destinationText.equals("Bangalore")){
+                    List<String> place0 = new ArrayList<>();
+                    List<String> place1 = new ArrayList<>();
+                    List<String> place2 = new ArrayList<>();
+                    List<String> place3 = new ArrayList<>();
+                    place0.add("58");
+                    place0.add("54");
+                    place0.add("41");
+                    place0.add("42");
+                    place0.add("53");
+
+                    place1.add("56");
+                    place1.add("38");
+                    place1.add("48");
+                    place1.add("44");
+                    place1.add("40");
+                    place1.add("47");
+
+                    place2.add("37");
+                    place2.add("39");
+                    place2.add("52");
+                    place2.add("51");
+                    place2.add("45");
+
+                    place3.add("36");
+                    place3.add("57");
+                    place3.add("43");
+                    placesList.add(place0);
+                    placesList.add(place1);
+                    placesList.add(place2);
+                    placesList.add(place3);
+                }
+
+                else if(destinationText.equals("Kolkata")){
+                    List<String> place0 = new ArrayList<>();
+                    List<String> place1 = new ArrayList<>();
+                    List<String> place2 = new ArrayList<>();
+                    List<String> place3 = new ArrayList<>();
+                    place0.add("65");
+                    place0.add("59");
+                    place0.add("70");
+                    place0.add("60");
+
+                    place1.add("61");
+                    place1.add("62");
+                    place1.add("66");
+
+                    place2.add("64");
+                    place2.add("63");
+
+                    place3.add("67");
+                    placesList.add(place0);
+                    placesList.add(place1);
+                    placesList.add(place2);
+                    placesList.add(place3);
+                }
                 if (TextUtils.isEmpty(fromDateString)) {
                     Toast.makeText(getApplicationContext(), "Enter From Date", Toast.LENGTH_SHORT).show();
                     return;

@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -44,6 +45,7 @@ public class MainHome extends AppCompatActivity {
     private RecyclerView sectionHeader;
     private SectionedRecyclerViewAdapter sectionAdapter;
     Firebase reference1;
+    Firebase reference2, reference3;
     private DrawerLayout dl;
     private ActionBarDrawerToggle t;
     private NavigationView nv;
@@ -51,6 +53,7 @@ public class MainHome extends AppCompatActivity {
     List<ItemObject> previousTrips = new ArrayList<>();
     List<ItemObject> currentTrips = new ArrayList<>();
     List<ItemObject> futureTrips = new ArrayList<>();
+    List<String> placeIds = new ArrayList<>();
     private SimpleDateFormat dateFormatter;
 
     @Override
@@ -114,7 +117,7 @@ public class MainHome extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 System.out.println("keys " + dataSnapshot.getChildrenCount());
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                for(final DataSnapshot ds : dataSnapshot.getChildren()) {
                     Map map = ds.getValue(Map.class);
                     //System.out.println("map " + map);
                     if(map.get("User UID").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
@@ -138,8 +141,81 @@ public class MainHome extends AppCompatActivity {
                         long diff = startDate.getTime() - now1.getTime();
                         long diff1 = endDate.getTime() - now1.getTime();
 
+
                         if(diff1<0 ){
                             previousTrips.add(new ItemObject("Previous Trip ", ds.getKey(),map.get("totalDays").toString(), map.get("startDate").toString()));
+
+
+                            reference3 = new Firebase("https://tourist-guide-fd1e1.firebaseio.com/itinerary");
+
+                            reference3.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    System.out.println("keys " + dataSnapshot.getChildrenCount());
+                                    for (DataSnapshot ds1 : dataSnapshot.getChildren()) {
+                                        Map map = ds1.getValue(Map.class);
+                                        System.out.println("ids " + map.get("tripId").toString());
+                                        if (map.get("tripId").toString().equals(ds.getKey())) {
+                                            placeIds = (ArrayList<String>)map.get("placesId");
+
+                                            System.out.println("placeIds in trip"+placeIds);
+
+                                            reference2 = new Firebase("https://tourist-guide-fd1e1.firebaseio.com/user");
+                                            reference2.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    for (DataSnapshot ds2 : dataSnapshot.getChildren()) {
+                                                        if (ds2.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                                                            Map map = ds2.getValue(Map.class);
+                                                            System.out.println("user data" + map);
+                                                            if (map.containsKey("placesVisited")) {
+                                                                HashMap<String, String> places = (HashMap<String, String>) map.get("placesVisited");
+                                                                System.out.println("Visited Places" + places);
+
+                                                                for (int k = 0; k < placeIds.size(); k++) {
+                                                                    if (!places.containsKey(placeIds.get(k))) {
+                                                                        System.out.println("Places is not visited" + placeIds.get(k));
+                                                                        places.put(placeIds.get(k).toString(), "-1");
+                                                                        //places.add();
+                                                                    }
+                                                                }
+
+                                                                reference2.child(ds2.getKey()).child("placesVisited").setValue(places);
+                                                            }
+
+                                                            else {
+                                                                System.out.println("Enter here for addition");
+                                                                Map<String, String> map2 = new HashMap<>();
+                                                                for(int k=0;k<placeIds.size();k++){
+                                                                    map2.put(placeIds.get(k).toString(), "-1");
+
+                                                                }
+                                                                reference2.child(ds2.getKey()).child("placesVisited").setValue(map2);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(FirebaseError firebaseError) {
+
+                                                }
+                                            });
+
+                                            System.out.println("itinerary " + map);
+                                        }
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(FirebaseError firebaseError) {
+
+                                }
+                            });
+
+
                         }
                         if(diff1>=0&&diff<=0){
                             currentTrips.add(new ItemObject("Current Trip \nDestination: "+map.get("destination")+"\nStart Date: "+map.get("startDate"), ds.getKey(), map.get("totalDays").toString(),  map.get("startDate").toString()));
@@ -161,10 +237,12 @@ public class MainHome extends AppCompatActivity {
                 HeaderRecyclerViewSection firstSection = new HeaderRecyclerViewSection("Future Trips", futureTrips);
                 HeaderRecyclerViewSection secondSection = new HeaderRecyclerViewSection("Current Trips", currentTrips);
                 HeaderRecyclerViewSection thirdSection = new HeaderRecyclerViewSection("Trips History", previousTrips.subList(0, min(max(0,previousTrips.size()-1), 5)));
+                HeaderRecyclerViewSection fourthSection = new HeaderRecyclerViewSection("Popular Places", getDataSourceForPopularPlaces());
                 sectionAdapter = new SectionedRecyclerViewAdapter();
                 sectionAdapter.addSection(createSection);
                 sectionAdapter.addSection(firstSection);
                 sectionAdapter.addSection(secondSection);
+                sectionAdapter.addSection(fourthSection);
                 sectionAdapter.addSection(thirdSection);
                 sectionHeader.setAdapter(sectionAdapter);
             }
@@ -181,6 +259,14 @@ public class MainHome extends AppCompatActivity {
         List<ItemObject> data = new ArrayList<ItemObject>();
         data.add(new ItemObject("Create New Trip", "Trip", "One","Date" ));
         return data;
+    }
+
+    private List<ItemObject> getDataSourceForPopularPlaces() {
+        List<ItemObject> data = new ArrayList<ItemObject>();
+        System.out.println("popular place inside");
+        data.add(new ItemObject("Popular Places", "Trip", "One","Date" ));
+        return data;
+
     }
 
     @Override

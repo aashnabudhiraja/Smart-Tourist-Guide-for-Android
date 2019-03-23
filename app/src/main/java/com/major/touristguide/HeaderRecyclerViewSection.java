@@ -10,12 +10,14 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.major.touristguide.activities.HomeActivity;
 import com.major.touristguide.activities.ItineraryActivity;
 import com.major.touristguide.models.ItemObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +30,7 @@ public class HeaderRecyclerViewSection extends StatelessSection {
     private List<String> itinerarys = new ArrayList<>();
     private String startDate;
     private Context mContext;
-    Firebase reference1;
+    Firebase reference1, reference2;
     public HeaderRecyclerViewSection(String title, List<ItemObject> list) {
         super(R.layout.header_layout, R.layout.item_layout);
         this.title = title;
@@ -59,6 +61,12 @@ public class HeaderRecyclerViewSection extends StatelessSection {
                     view.getContext().startActivity(intent);
                 }
 
+                else if(title.equals("Popular Places")) {
+                    System.out.println("popular place here");
+                    Intent intent1 = new Intent(view.getContext(), PopularPlaces.class);
+                    view.getContext().startActivity(intent1);
+                }
+
                 else {
                     reference1 = new Firebase("https://tourist-guide-fd1e1.firebaseio.com/itinerary");
 
@@ -76,6 +84,8 @@ public class HeaderRecyclerViewSection extends StatelessSection {
                                     System.out.println("itinerary " + map);
                                 }
                             }
+
+
 
                             Intent i = new Intent(view.getContext(), ItineraryActivity.class);
                             i.putExtra("startDate",list.get(position).getStartDate());

@@ -45,7 +45,9 @@
         <activity android:name=".activities.ItineraryActivity" />
         <activity android:name=".activities.MainHome" />
         <activity android:name=".activities.ItineraryEdit" />
-        <activity android:name=".activities.Routing"></activity>
+        <activity android:name=".activities.Routing" />
+        <activity android:name=".PopularPlaces" />
+        <activity android:name=".activities.PlaceRating"></activity>
     </application>
 
 </manifest>
