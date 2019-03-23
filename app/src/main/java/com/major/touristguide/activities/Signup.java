@@ -11,17 +11,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.major.touristguide.R;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Signup extends AppCompatActivity {
 
@@ -29,7 +23,6 @@ public class Signup extends AppCompatActivity {
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
-    Firebase reference1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +38,6 @@ public class Signup extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
-        Firebase.setAndroidContext(this);
 
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,15 +90,7 @@ public class Signup extends AppCompatActivity {
                                     Toast.makeText(Signup.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
-
-                                    List<String> categoriesList = new ArrayList<>();
-                                    categoriesList.add("1");
-
-                                    reference1 = new Firebase("https://tourist-guide-fd1e1.firebaseio.com/user");
-                                    reference1.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("numOfTrips").setValue("1");
-                                    reference1.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("categoryList").setValue(categoriesList);
-
-                                    startActivity(new Intent(Signup.this, MainHome.class));
+                                    startActivity(new Intent(Signup.this, Interest.class));
                                     finish();
                                 }
                             }
