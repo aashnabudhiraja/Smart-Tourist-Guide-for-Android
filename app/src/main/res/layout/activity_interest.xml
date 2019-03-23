@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFF">
+
+                <TableRow
+
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="20dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="20dp"
+                        android:text="Pick Your Interests"
+                        android:textSize="20dp" />
+
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="310dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="Lakes"
+                        android:textColor="#000"
+                        android:textSize="18dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_lake"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:onClick="onCheckboxClicked" />
+
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="Monuments"
+                        android:textColor="#000"
+                        android:textSize="18dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_monuments"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:onClick="onCheckboxClicked" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="Gardens"
+                        android:textColor="#000"
+                        android:textSize="18dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_gardens"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:onClick="onCheckboxClicked" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="Markets"
+                        android:textColor="#000"
+                        android:textSize="18dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_markets"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:onClick="onCheckboxClicked" />
+
+                </TableRow>
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="Casino's"
+                        android:textColor="#000"
+                        android:textSize="18dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_casinos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:onClick="onCheckboxClicked" />
+
+                </TableRow>
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="Art Gallery"
+                        android:textColor="#000"
+                        android:textSize="18dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_art"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:onClick="onCheckboxClicked" />
+
+                </TableRow>
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="Zoo"
+                        android:textColor="#000"
+                        android:textSize="18dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_zoo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:onClick="onCheckboxClicked" />
+
+                </TableRow>
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="Theme Parks"
+                        android:textColor="#000"
+                        android:textSize="18dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_theme"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:onClick="onCheckboxClicked" />
+
+                </TableRow>
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="Malls"
+                        android:textColor="#000"
+                        android:textSize="18dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_malls"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:onClick="onCheckboxClicked" />
+
+                </TableRow>
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="Adventure"
+                        android:textColor="#000"
+                        android:textSize="18dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_adventure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:onClick="onCheckboxClicked" />
+
+                </TableRow>
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="Local Culture"
+                        android:textColor="#000"
+                        android:textSize="18dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_local"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:onClick="onCheckboxClicked" />
+
+                </TableRow>
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="Beaches"
+                        android:textColor="#000"
+                        android:textSize="18dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_beaches"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:onClick="onCheckboxClicked" />
+
+                </TableRow>
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="Waterfalls"
+                        android:textColor="#000"
+                        android:textSize="18dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_waterfalls"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:onClick="onCheckboxClicked" />
+
+                </TableRow>
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="Religious Places"
+                        android:textColor="#000"
+                        android:textSize="18dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_religious"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:onClick="onCheckboxClicked" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="Museums"
+                        android:textColor="#000"
+                        android:textSize="18dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_museums"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:onClick="onCheckboxClicked" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="Hill Stations"
+                        android:textColor="#000"
+                        android:textSize="18dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_hills"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:onClick="onCheckboxClicked" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="15dp"
+                        android:text="Wildlife"
+                        android:textColor="#000"
+                        android:textSize="18dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_wildlife"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:onClick="onCheckboxClicked" />
+
+
+                </TableRow>
+
+                <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:padding="15dp"
+                            android:text="National Parks"
+                            android:textColor="#000"
+                            android:textSize="18dp" />
+
+                        <CheckBox
+                            android:id="@+id/checkbox_nationalParks"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:onClick="onCheckboxClicked" />
+
+                    </TableRow>
+
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:padding="15dp"
+                            android:text="Historical Places"
+                            android:textColor="#000"
+                            android:textSize="18dp" />
+
+                        <CheckBox
+                            android:id="@+id/checkbox_historical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:onClick="onCheckboxClicked" />
+                    </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:padding="15dp"
+                                android:text="Deserts"
+                                android:textColor="#000"
+                                android:textSize="18dp" />
+
+                            <CheckBox
+                                android:id="@+id/checkbox_desert"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:onClick="onCheckboxClicked" />
+                        </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:padding="15dp"
+                                    android:text="Back Waters"
+                                    android:textColor="#000"
+                                    android:textSize="18dp" />
+
+                                <CheckBox
+                                    android:id="@+id/checkbox_backWaters"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:onClick="onCheckboxClicked" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:padding="15dp"
+                                    android:text="Royal Palaces"
+                                    android:textColor="#000"
+                                    android:textSize="18dp" />
+
+                                <CheckBox
+                                    android:id="@+id/checkbox_palaces"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:onClick="onCheckboxClicked" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:padding="15dp"
+                                    android:text="Science"
+                                    android:textColor="#000"
+                                    android:textSize="18dp" />
+
+                                <CheckBox
+                                    android:id="@+id/checkbox_science"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:onClick="onCheckboxClicked" />
+
+                            </TableRow>
+							
+							
+							<TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:padding="15dp"
+                                    android:text="Nature"
+                                    android:textColor="#000"
+                                    android:textSize="18dp" />
+
+                                <CheckBox
+                                    android:id="@+id/checkbox_nature"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:onClick="onCheckboxClicked" />
+
+                            </TableRow>
+
+
+                <Button
+                    android:id="@+id/btn_doneInterest"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dip"
+                    android:background="@color/colorAccent"
+                    android:text="Done"
+                    android:textColor="@android:color/black" />
+
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+
+</android.support.constraint.ConstraintLayout>
