@@ -10,18 +10,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 
+import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.major.touristguide.R;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class Interest extends AppCompatActivity {
 
-    private android.support.v7.widget.Toolbar toolbar;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    private FirebaseAuth auth;
-    SharedPreferences sp;
 	Firebase reference1;
+    List<String> categoriesList = new ArrayList<>();
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,6 @@ public class Interest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interest);
         Button btn_doneInterest;
-        sp = getSharedPreferences("Interest",MODE_PRIVATE);
 
         btn_doneInterest = (Button) findViewById(R.id.btn_doneInterest);
 
@@ -37,16 +38,18 @@ public class Interest extends AppCompatActivity {
         setTitle("Exploraguide");
 
 
-        auth = FirebaseAuth.getInstance();
-		Map<String,String> map1=new ArrayList<>();
+        Firebase.setAndroidContext(this);
 		 reference1 = new Firebase("https://tourist-guide-fd1e1.firebaseio.com/user");
 
         btn_doneInterest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("Categories "+categoriesList);
+
+                reference1.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("numOfTrips").setValue("1");
+                reference1.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("categoryList").setValue(categoriesList);
                                     Intent intent = new Intent(Interest.this, MainHome.class);
                                     startActivity(intent);
-                                    sp.edit().putBoolean("logged",true).apply();
                                     finish();
 
                             }
@@ -63,166 +66,159 @@ public class Interest extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.checkbox_lake:
                 if (checked){
-					map1.put("User UID", FirebaseAuth.getInstance().getCurrentUser().getUid());
-					map1.put("categoryList", "1");
-					  String test = reference1.push().getKey();
-                      reference1.child(test).setValue(map);
+                    categoriesList.add("1");
 					
                 }
-
-                else
-
                 break;
 				  case R.id.checkbox_gardens:
                 if (checked){
+                    categoriesList.add("2");
 					
 				}
-
-                else
-
                  break;
 				 
 				   case R.id.checkbox_religious:
-                if (checked){}
-
-                else
+                if (checked){
+                    categoriesList.add("3");
+                }
 
                  break;
 				 
 				  case R.id.checkbox_malls:
-                if (checked){}
+                if (checked){
+                    categoriesList.add("4");
+                }
 
-                else
                     break;
 
 				  case R.id.checkbox_markets:
-                if (checked){}
-
-                else
+                if (checked){
+                    categoriesList.add("5");
+                }
                 break;
 
 			  case R.id.checkbox_museums:
-                if (checked){}
+                if (checked){
+                    categoriesList.add("6");
+                }
 
-                else
                 break;
 			
 			case R.id.checkbox_zoo:
-                if (checked){}
+                if (checked){
+                    categoriesList.add("7");
+                }
 
-                else
                     break;
 
 				case R.id.checkbox_hills:
-                if (checked){}
+                if (checked){
+                    categoriesList.add("8");
+                }
 
-                else
                     break;
 
 
 				case R.id.checkbox_theme:
-                if (checked){}
-
-                else
+                if (checked){
+                    categoriesList.add("9");
+                }
                     break;
 
 				
 				 case R.id.checkbox_beaches:
-                if (checked){}
+                if (checked){
+                    categoriesList.add("10");
+                }
 
-                else
                     break;
 
 				 case R.id.checkbox_adventure:
-                if (checked){}
-
-                else
+                if (checked){
+                    categoriesList.add("11");
+                }
                     break;
 				
 				 case R.id.checkbox_nationalParks:
-                if (checked){}
-
-                else
+                if (checked){
+                    categoriesList.add("12");
+                }
                     break;
 				
 				 case R.id.checkbox_wildlife:
-                if (checked){}
-
-                else
+                if (checked){
+                    categoriesList.add("13");
+                }
                     break;
 				
 			
             case R.id.checkbox_monuments:
-                if (checked){}
-
-               else
-
+                if (checked){
+                    categoriesList.add("14");
+                }
                    break;
                   
                   
             case R.id.checkbox_casinos:
-                if (checked){}
-
-                else
+                if (checked){
+                    categoriesList.add("15");
+                }
                     break;
 
 				 case R.id.checkbox_historical:
-                if (checked){}
-
-                else
+                if (checked){
+                    categoriesList.add("16");
+                }
                     break;
 				
 				  case R.id.checkbox_waterfalls:
-                if (checked){}
-
-                else
+                if (checked){
+                    categoriesList.add("17");
+                }
                     break;
 
             case R.id.checkbox_art:
-                if (checked){}
-
-                else
+                if (checked){
+                    categoriesList.add("18");
+                }
                     break;
 
           
             case R.id.checkbox_local:
-                if (checked){}
-
-                else
+                if (checked){
+                    categoriesList.add("19");
+                }
                     break;
 				
 				  case R.id.checkbox_desert:
-                if (checked){}
-
-                else
+                if (checked){
+                    categoriesList.add("20");
+                }
                     break;
 				
-				  case R.id.checkbox_backwaters:
-                if (checked){}
-
-                else
+				  case R.id.checkbox_backWaters:
+                if (checked){
+                    categoriesList.add("21");
+                }
                     break;
 				
 				  case R.id.checkbox_palaces:
-                if (checked){}
-
-                else
+                if (checked){
+                    categoriesList.add("22");
+                }
                     break;
 				
 				  case R.id.checkbox_nature:
-                if (checked){}
-
-                else
+                if (checked){
+                    categoriesList.add("23");
+                }
                     break;
 				
 				  case R.id.checkbox_science:
-                if (checked){}
-
-                else
+                if (checked){
+                    categoriesList.add("24");
+                }
                     break;
-
-
-           
           
         }
     }
