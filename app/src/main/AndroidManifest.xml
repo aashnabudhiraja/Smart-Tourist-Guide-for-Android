@@ -34,6 +34,7 @@
         <activity android:name=".activities.Signup" />
         <activity android:name=".activities.ResetPassword" />
         <activity android:name=".activities.HomeActivity" />
+        <activity android:name=".activities.Interest" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

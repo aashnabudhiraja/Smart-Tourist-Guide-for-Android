@@ -169,7 +169,7 @@ public class PlaceRating extends AppCompatActivity {
                     if(ds.getKey().equals(placeId)) {
                         description = map.get("description").toString();
                         avgRating = map.get("avgRating").toString();
-                        descriptionTxt.append(description);
+                        descriptionTxt.append("\n"+description);
                         avgRatingTxt.append(avgRating);
 
                     }
