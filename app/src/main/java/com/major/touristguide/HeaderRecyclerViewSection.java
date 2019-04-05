@@ -10,14 +10,13 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.major.touristguide.activities.HomeActivity;
 import com.major.touristguide.activities.ItineraryActivity;
+import com.major.touristguide.activities.PopularPlaces;
 import com.major.touristguide.models.ItemObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

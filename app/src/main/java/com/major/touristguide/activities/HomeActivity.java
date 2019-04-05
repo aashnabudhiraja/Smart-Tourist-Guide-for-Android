@@ -180,18 +180,18 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                     List<String> place1 = new ArrayList<>();
                     List<String> place2 = new ArrayList<>();
                     List<String> place3 = new ArrayList<>();
-                    place0.add("1");
-                    place0.add("2");
                     place0.add("3");
+                    place0.add("2");
+                    place0.add("1");
 
-                    place1.add("4");
                     place1.add("6");
                     place1.add("5");
+                    place1.add("4");
                     place1.add("9");
 
                     place2.add("10");
-                    place2.add("8");
                     place2.add("7");
+                    place2.add("8");
 
                     place3.add("11");
                     place3.add("12");

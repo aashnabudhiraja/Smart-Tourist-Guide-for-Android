@@ -1,8 +1,9 @@
-package com.major.touristguide;
+package com.major.touristguide.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,12 +14,12 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.major.touristguide.activities.HomeActivity;
-import com.major.touristguide.activities.ItineraryActivity;
-import com.major.touristguide.activities.PlaceRating;
+import com.major.touristguide.CustomAdapter;
+import com.major.touristguide.R;
 import com.major.touristguide.models.PlaceItem;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -96,6 +97,8 @@ public class PopularPlaces extends AppCompatActivity {
                                     }
                                 }
 
+                                Collections.sort(placeItems, Collections.reverseOrder());
+
                                 CustomAdapter adapter = new CustomAdapter(getApplicationContext(), placeItems);
                                 System.out.println("adapter value" + adapter);
                                 listView.setAdapter(adapter);
@@ -141,4 +144,23 @@ public class PopularPlaces extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(this, MainHome.class));
+        finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return false;
+    }
+
 }

@@ -1,6 +1,6 @@
 package com.major.touristguide.models;
 
-public class PlaceItem {
+public class PlaceItem implements Comparable<PlaceItem>{
 
     private String placeName;
     private String placeId;
@@ -32,5 +32,10 @@ public class PlaceItem {
     @Override
     public String toString() {
         return placeName + "\n" + rating;
+    }
+
+    @Override
+    public int compareTo(PlaceItem placeitem) {
+        return this.getRating().compareTo(placeitem.getRating());
     }
 }
