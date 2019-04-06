@@ -42,7 +42,7 @@
         <activity
             android:name=".activities.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".activities.ItineraryActivity" />
+        <activity android:name=".activities.Itinerary" />
         <activity android:name=".activities.Home" />
         <activity android:name=".activities.ItineraryEdit" />
         <activity android:name=".activities.Routing" />

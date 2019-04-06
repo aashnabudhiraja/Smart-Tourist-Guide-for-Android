@@ -389,7 +389,7 @@ public class CreateTrip extends AppCompatActivity implements AdapterView.OnItemS
                 }
 
 
-                Intent i = new Intent(CreateTrip.this, ItineraryActivity.class);
+                Intent i = new Intent(CreateTrip.this, Itinerary.class);
                 i.putExtra("startDate",fromDateString);
                 System.out.println("home"+fromDateString);
 //                i.putExtra("startDateCalendar",fromDate);

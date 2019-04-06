@@ -11,7 +11,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.major.touristguide.activities.CreateTrip;
-import com.major.touristguide.activities.ItineraryActivity;
+import com.major.touristguide.activities.Itinerary;
 import com.major.touristguide.activities.PopularPlaces;
 import com.major.touristguide.models.ItemObject;
 
@@ -86,7 +86,7 @@ public class HeaderRecyclerViewSection extends StatelessSection {
 
 
 
-                            Intent i = new Intent(view.getContext(), ItineraryActivity.class);
+                            Intent i = new Intent(view.getContext(), Itinerary.class);
                             i.putExtra("startDate",list.get(position).getStartDate());
                            //System.out.println("home"+fromDateString);
                             i.putExtra("days", list.get(position).getDays());
