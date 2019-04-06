@@ -60,7 +60,7 @@ public class ItineraryActivity extends AppCompatActivity {
     public void onBackPressed()
     {
         super.onBackPressed();
-        startActivity(new Intent(ItineraryActivity.this, MainHome.class));
+        startActivity(new Intent(ItineraryActivity.this, Home.class));
         finish();
     }
 

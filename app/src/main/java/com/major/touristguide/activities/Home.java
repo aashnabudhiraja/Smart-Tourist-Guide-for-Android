@@ -39,9 +39,9 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapt
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class MainHome extends AppCompatActivity {
+public class Home extends AppCompatActivity {
 
-    private static final String TAG = MainHome.class.getSimpleName();
+    private static final String TAG = Home.class.getSimpleName();
     private RecyclerView sectionHeader;
     private SectionedRecyclerViewAdapter sectionAdapter;
     Firebase reference1;
@@ -59,7 +59,7 @@ public class MainHome extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_home);
+        setContentView(R.layout.activity_home);
 
         dl = (DrawerLayout) findViewById(R.id.activity_navbar);
 
@@ -75,7 +75,7 @@ public class MainHome extends AppCompatActivity {
         nv = (NavigationView)findViewById(R.id.nv);
         View hView = nv.getHeaderView(0);
         heading =(TextView) hView.findViewById(R.id.heading);
-        heading.setText("User: "+FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        heading.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -87,13 +87,13 @@ public class MainHome extends AppCompatActivity {
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.clear();
                         editor.commit();
-                        startActivity(new Intent(MainHome.this, Login.class));
+                        startActivity(new Intent(Home.this, Login.class));
                         finish();
                         return true;
                     }
 
                     case R.id.home: {
-                        startActivity(new Intent(MainHome.this,MainHome.class));
+                        startActivity(new Intent(Home.this,Home.class));
                         finish();
                         return true;
                     }
@@ -230,7 +230,7 @@ public class MainHome extends AppCompatActivity {
 
 
                 sectionHeader = (RecyclerView)findViewById(R.id.add_header);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainHome.this);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Home.this);
                 sectionHeader.setLayoutManager(linearLayoutManager);
                 sectionHeader.setHasFixedSize(true);
                 HeaderRecyclerViewSection createSection = new HeaderRecyclerViewSection("Create New Trip",getDataSource());

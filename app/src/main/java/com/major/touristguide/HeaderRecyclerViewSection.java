@@ -10,7 +10,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.major.touristguide.activities.HomeActivity;
+import com.major.touristguide.activities.CreateTrip;
 import com.major.touristguide.activities.ItineraryActivity;
 import com.major.touristguide.activities.PopularPlaces;
 import com.major.touristguide.models.ItemObject;
@@ -56,7 +56,7 @@ public class HeaderRecyclerViewSection extends StatelessSection {
             public void onClick(final View view) {
                 Firebase.setAndroidContext(view.getContext());
                 if(title.equals("Create New Trip")){
-                    Intent intent = new Intent(view.getContext(), HomeActivity.class);
+                    Intent intent = new Intent(view.getContext(), CreateTrip.class);
                     view.getContext().startActivity(intent);
                 }
 

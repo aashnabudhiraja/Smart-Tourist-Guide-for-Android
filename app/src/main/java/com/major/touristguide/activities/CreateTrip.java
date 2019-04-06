@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class CreateTrip extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     private Spinner destination;
 
     private EditText fromDateEtxt;
@@ -62,7 +62,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_create_trip);
 
         dl = (DrawerLayout) findViewById(R.id.activity_navbar);
 
@@ -92,13 +92,13 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.clear();
                         editor.commit();
-                        startActivity(new Intent(HomeActivity.this, Login.class));
+                        startActivity(new Intent(CreateTrip.this, Login.class));
                         finish();
                         return true;
                     }
 
                     case R.id.home: {
-                        startActivity(new Intent(HomeActivity.this,MainHome.class));
+                        startActivity(new Intent(CreateTrip.this,Home.class));
                         finish();
                         return true;
                     }
@@ -389,7 +389,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
 
 
-                Intent i = new Intent(HomeActivity.this, ItineraryActivity.class);
+                Intent i = new Intent(CreateTrip.this, ItineraryActivity.class);
                 i.putExtra("startDate",fromDateString);
                 System.out.println("home"+fromDateString);
 //                i.putExtra("startDateCalendar",fromDate);

@@ -149,7 +149,7 @@ public class PopularPlaces extends AppCompatActivity {
     public void onBackPressed()
     {
         super.onBackPressed();
-        startActivity(new Intent(this, MainHome.class));
+        startActivity(new Intent(this, Home.class));
         finish();
     }
 
