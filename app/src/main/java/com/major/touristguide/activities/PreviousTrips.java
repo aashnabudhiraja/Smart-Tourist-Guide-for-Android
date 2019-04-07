@@ -37,10 +37,7 @@ import java.util.Map;
 
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
-
-public class Home extends AppCompatActivity {
+public class PreviousTrips extends AppCompatActivity {
 
     private static final String TAG = Home.class.getSimpleName();
     private RecyclerView sectionHeader;
@@ -51,99 +48,26 @@ public class Home extends AppCompatActivity {
     private ActionBarDrawerToggle t;
     private NavigationView nv;
     private TextView heading;
-//    List<ItemObject> previousTrips = new ArrayList<>();
+    List<ItemObject> previousTrips = new ArrayList<>();
     List<ItemObject> currentTrips = new ArrayList<>();
     List<ItemObject> futureTrips = new ArrayList<>();
     List<String> placeIds = new ArrayList<>();
     private SimpleDateFormat dateFormatter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+    protected void onCreate(Bundle savedInstanceState) {super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_previous_trips);
 
-        dl = (DrawerLayout) findViewById(R.id.activity_navbar);
-
-        t = new ActionBarDrawerToggle(this, dl, R.string.Open, R.string.Close);
-        t.setDrawerIndicatorEnabled(true);
-
-        dl.addDrawerListener(t);
-        t.syncState();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setTitle("Home");
-        nv = (NavigationView)findViewById(R.id.nv);
-        View hView = nv.getHeaderView(0);
-        heading =(TextView) hView.findViewById(R.id.heading);
-        heading.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                System.out.println(" id   "+id);
-                switch (id) {
-                    case R.id.logout: {
-                        SharedPreferences preferences =getSharedPreferences("login", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.clear();
-                        editor.commit();
-                        startActivity(new Intent(Home.this, Login.class));
-                        finish();
-                        return true;
-                    }
-
-                    case R.id.home: {
-                        startActivity(new Intent(Home.this,Home.class));
-                        finish();
-                        return true;
-                    }
-                    default:
-                        return true;
-                }
-
-
-            }
-        });
-
-
-        ImageButton popPlacesButton = (ImageButton) findViewById(R.id.popPlacesButton);
-        popPlacesButton.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                Intent i = new Intent(Home.this, PopularPlaces.class);
-                startActivity(i);
-            }
-
-            ;
-        });
-        ImageButton createTripButton = (ImageButton) findViewById(R.id.addTripButton);
-        createTripButton.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                Intent i = new Intent(Home.this, CreateTrip.class);
-                startActivity(i);
-            }
-
-            ;
-        });
-        ImageButton previousTripsButton = (ImageButton) findViewById(R.id.previousTripsButton);
-        previousTripsButton.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                Intent i = new Intent(Home.this, PreviousTrips.class);
-                startActivity(i);
-            }
-
-            ;
-        });
+        setTitle("Past Trips");
 
         Firebase.setAndroidContext(this);
 
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         reference1 = new Firebase("https://tourist-guide-fd1e1.firebaseio.com/trips");
 
-        //reference1.child("User UID").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid())
 
         System.out.println("reference1 "+reference1.child("User UID"));
         reference1.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -153,7 +77,6 @@ public class Home extends AppCompatActivity {
                 System.out.println("keys " + dataSnapshot.getChildrenCount());
                 for (final DataSnapshot ds : dataSnapshot.getChildren()) {
                     Map map = ds.getValue(Map.class);
-                    //System.out.println("map " + map);
                     if (map.get("User UID").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                         String startD = map.get("startDate").toString();
                         String endD = map.get("endDate").toString();
@@ -168,16 +91,15 @@ public class Home extends AppCompatActivity {
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        Date startDate = fromDate.getTime();
+
                         Date endDate = toDate.getTime();
                         Date now1 = now.getTime();
 
-                        long diff = startDate.getTime() - now1.getTime();
                         long diff1 = endDate.getTime() - now1.getTime();
 
 
-/*                        if (diff1 < 0) {
-                            previousTrips.add(new ItemObject("Previous Trip ", ds.getKey(), map.get("totalDays").toString(), map.get("startDate").toString()));
+                        if (diff1 < 0) {
+                            previousTrips.add(new ItemObject("Trip to " + map.get("destination") + "\nStart Date: " + map.get("startDate") + "\nDuration: " + map.get("totalDays").toString() + " days", ds.getKey(), map.get("totalDays").toString(), map.get("startDate").toString()));
 
 
                             reference3 = new Firebase("https://tourist-guide-fd1e1.firebaseio.com/itinerary");
@@ -211,7 +133,6 @@ public class Home extends AppCompatActivity {
                                                                     if (!places.containsKey(placeIds.get(k))) {
                                                                         System.out.println("Places is not visited" + placeIds.get(k));
                                                                         places.put(placeIds.get(k).toString(), "-1");
-                                                                        //places.add();
                                                                     }
                                                                 }
 
@@ -248,35 +169,19 @@ public class Home extends AppCompatActivity {
                             });
 
 
-                        }*/
-                        if (diff1 >= 0 && diff <= 0) {
-                            currentTrips.add(new ItemObject("Trip to " + map.get("destination") + "\nStart Date: " + map.get("startDate") + "\nDuration: " + map.get("totalDays").toString() + " days", ds.getKey(), map.get("totalDays").toString(), map.get("startDate").toString()));
-                        }
-                        if (diff1 > 0 && diff > 0) {
-                            futureTrips.add(new ItemObject("Trip to " + map.get("destination") + "\nStart Date: " + map.get("startDate") + "\nDuration: " + map.get("totalDays").toString() + " days", ds.getKey(), map.get("totalDays").toString(), map.get("startDate").toString()));
                         }
                     }
                 }
 
 
-                sectionHeader = (RecyclerView) findViewById(R.id.add_header);
-                sectionHeader.setNestedScrollingEnabled(false);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Home.this);
+                sectionHeader = (RecyclerView) findViewById(R.id.recyclerView);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(PreviousTrips.this);
                 sectionHeader.setLayoutManager(linearLayoutManager);
                 sectionHeader.setHasFixedSize(true);
-//                HeaderRecyclerViewSection createSection = new HeaderRecyclerViewSection("Create New Trip", getDataSource());
-                HeaderRecyclerViewSection firstSection = new HeaderRecyclerViewSection("Future Trips", futureTrips);
-                HeaderRecyclerViewSection secondSection = new HeaderRecyclerViewSection("Current Trips", currentTrips);
-//                HeaderRecyclerViewSection thirdSection = new HeaderRecyclerViewSection("Trips History", previousTrips.subList(0, min(max(0, previousTrips.size() - 1), 5)));
-//                HeaderRecyclerViewSection fourthSection = new HeaderRecyclerViewSection("Popular Places", getDataSourceForPopularPlaces());
+                HeaderRecyclerViewSection section = new HeaderRecyclerViewSection("", previousTrips);
                 sectionAdapter = new SectionedRecyclerViewAdapter();
-//                sectionAdapter.addSection(createSection);
-                sectionAdapter.addSection(secondSection);
-                sectionAdapter.addSection(firstSection);
-//                sectionAdapter.addSection(fourthSection);
-//                sectionAdapter.addSection(thirdSection);
+                sectionAdapter.addSection(section);
                 sectionHeader.setAdapter(sectionAdapter);
-
 
             }
 
@@ -284,30 +189,26 @@ public class Home extends AppCompatActivity {
             public void onCancelled(FirebaseError firebaseError){
 
             }
+
         });
-
     }
 
-/*    private List<ItemObject> getDataSource(){
-        List<ItemObject> data = new ArrayList<ItemObject>();
-        data.add(new ItemObject("Create New Trip   >>", "Trip", "One","Date" ));
-        return data;
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(this, Home.class));
+        finish();
     }
-
-    private List<ItemObject> getDataSourceForPopularPlaces() {
-        List<ItemObject> data = new ArrayList<ItemObject>();
-        System.out.println("popular place inside");
-        data.add(new ItemObject("Explore Popular Places    >>", "Trip", "One","Date" ));
-        return data;
-
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (t.onOptionsItemSelected(item))
-            return true;
-
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return false;
     }
 }

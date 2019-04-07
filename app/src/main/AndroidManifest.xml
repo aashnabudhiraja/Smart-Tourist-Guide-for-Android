@@ -26,8 +26,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.Login"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.Signup"
             android:theme="@style/AppTheme" />
@@ -50,10 +49,12 @@
         <activity android:name=".activities.PlaceRating" />
         <activity android:name=".activities.SplashScreen">
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.PreviousTrips"></activity>
     </application>
 
 </manifest>
