@@ -10,14 +10,13 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.major.touristguide.activities.HomeActivity;
-import com.major.touristguide.activities.ItineraryActivity;
+import com.major.touristguide.activities.CreateTrip;
+import com.major.touristguide.activities.Itinerary;
+import com.major.touristguide.activities.PopularPlaces;
 import com.major.touristguide.models.ItemObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +56,7 @@ public class HeaderRecyclerViewSection extends StatelessSection {
             public void onClick(final View view) {
                 Firebase.setAndroidContext(view.getContext());
                 if(title.equals("Create New Trip")){
-                    Intent intent = new Intent(view.getContext(), HomeActivity.class);
+                    Intent intent = new Intent(view.getContext(), CreateTrip.class);
                     view.getContext().startActivity(intent);
                 }
 
@@ -87,7 +86,7 @@ public class HeaderRecyclerViewSection extends StatelessSection {
 
 
 
-                            Intent i = new Intent(view.getContext(), ItineraryActivity.class);
+                            Intent i = new Intent(view.getContext(), Itinerary.class);
                             i.putExtra("startDate",list.get(position).getStartDate());
                            //System.out.println("home"+fromDateString);
                             i.putExtra("days", list.get(position).getDays());

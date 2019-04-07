@@ -94,9 +94,9 @@ public class TabFragment extends Fragment implements AdapterView.OnItemClickList
 
         reference1 = new Firebase("https://tourist-guide-fd1e1.firebaseio.com/itinerary");
 
-        final ProgressDialog pd = new ProgressDialog(getContext());
-        pd.setMessage("Loading...");
-        pd.show();
+//        final ProgressDialog pd = new ProgressDialog(getContext());
+//        pd.setMessage("Loading...");
+//        pd.show();
 
         reference1.child(itineraryIds.get(position)).addValueEventListener(new ValueEventListener() {
 
@@ -127,7 +127,7 @@ public class TabFragment extends Fragment implements AdapterView.OnItemClickList
                             String placeName = map1.get("placeName").toString();
                             String openTime = map1.get("Open Time").toString();
                             String closeTime = map1.get("Close Time").toString();
-                            rowItems.add(new RowItem(placeIds.get(j), placeName, "Place Opens at "+openTime+"\nCloses at "+closeTime));
+                            rowItems.add(new RowItem(placeIds.get(j), placeName, "Opening Hours: "+openTime+" - "+closeTime));
                             CustomBaseAdapter adapter = new CustomBaseAdapter(getContext(), rowItems);
                             listView.setAdapter(adapter);
 
@@ -211,7 +211,7 @@ public class TabFragment extends Fragment implements AdapterView.OnItemClickList
                     });
                 }
 
-                pd.dismiss();
+//                pd.dismiss();
             }
 
             @Override

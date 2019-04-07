@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class CreateTrip extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     private Spinner destination;
 
     private EditText fromDateEtxt;
@@ -62,7 +62,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_create_trip);
 
         dl = (DrawerLayout) findViewById(R.id.activity_navbar);
 
@@ -92,13 +92,13 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.clear();
                         editor.commit();
-                        startActivity(new Intent(HomeActivity.this, Login.class));
+                        startActivity(new Intent(CreateTrip.this, Login.class));
                         finish();
                         return true;
                     }
 
                     case R.id.home: {
-                        startActivity(new Intent(HomeActivity.this,MainHome.class));
+                        startActivity(new Intent(CreateTrip.this,Home.class));
                         finish();
                         return true;
                     }
@@ -180,18 +180,18 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                     List<String> place1 = new ArrayList<>();
                     List<String> place2 = new ArrayList<>();
                     List<String> place3 = new ArrayList<>();
-                    place0.add("1");
-                    place0.add("2");
                     place0.add("3");
+                    place0.add("2");
+                    place0.add("1");
 
-                    place1.add("4");
                     place1.add("6");
                     place1.add("5");
+                    place1.add("4");
                     place1.add("9");
 
                     place2.add("10");
-                    place2.add("8");
                     place2.add("7");
+                    place2.add("8");
 
                     place3.add("11");
                     place3.add("12");
@@ -389,7 +389,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
 
 
-                Intent i = new Intent(HomeActivity.this, ItineraryActivity.class);
+                Intent i = new Intent(CreateTrip.this, Itinerary.class);
                 i.putExtra("startDate",fromDateString);
                 System.out.println("home"+fromDateString);
 //                i.putExtra("startDateCalendar",fromDate);

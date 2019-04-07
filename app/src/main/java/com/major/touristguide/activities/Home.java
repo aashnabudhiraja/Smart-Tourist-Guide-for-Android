@@ -13,7 +13,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -39,9 +42,9 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapt
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class MainHome extends AppCompatActivity {
+public class Home extends AppCompatActivity {
 
-    private static final String TAG = MainHome.class.getSimpleName();
+    private static final String TAG = Home.class.getSimpleName();
     private RecyclerView sectionHeader;
     private SectionedRecyclerViewAdapter sectionAdapter;
     Firebase reference1;
@@ -59,7 +62,7 @@ public class MainHome extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_home);
+        setContentView(R.layout.activity_home);
 
         dl = (DrawerLayout) findViewById(R.id.activity_navbar);
 
@@ -75,7 +78,7 @@ public class MainHome extends AppCompatActivity {
         nv = (NavigationView)findViewById(R.id.nv);
         View hView = nv.getHeaderView(0);
         heading =(TextView) hView.findViewById(R.id.heading);
-        heading.setText("User: "+FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        heading.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -87,13 +90,13 @@ public class MainHome extends AppCompatActivity {
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.clear();
                         editor.commit();
-                        startActivity(new Intent(MainHome.this, Login.class));
+                        startActivity(new Intent(Home.this, Login.class));
                         finish();
                         return true;
                     }
 
                     case R.id.home: {
-                        startActivity(new Intent(MainHome.this,MainHome.class));
+                        startActivity(new Intent(Home.this,Home.class));
                         finish();
                         return true;
                     }
@@ -117,10 +120,10 @@ public class MainHome extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 System.out.println("keys " + dataSnapshot.getChildrenCount());
-                for(final DataSnapshot ds : dataSnapshot.getChildren()) {
+                for (final DataSnapshot ds : dataSnapshot.getChildren()) {
                     Map map = ds.getValue(Map.class);
                     //System.out.println("map " + map);
-                    if(map.get("User UID").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                    if (map.get("User UID").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                         String startD = map.get("startDate").toString();
                         String endD = map.get("endDate").toString();
                         Calendar fromDate = Calendar.getInstance();
@@ -131,7 +134,7 @@ public class MainHome extends AppCompatActivity {
                             fromDate.setTime(dateFormatter.parse(startD));
                             toDate.setTime(dateFormatter.parse(endD));
 
-                        } catch(ParseException e){
+                        } catch (ParseException e) {
                             e.printStackTrace();
                         }
                         Date startDate = fromDate.getTime();
@@ -142,8 +145,8 @@ public class MainHome extends AppCompatActivity {
                         long diff1 = endDate.getTime() - now1.getTime();
 
 
-                        if(diff1<0 ){
-                            previousTrips.add(new ItemObject("Previous Trip ", ds.getKey(),map.get("totalDays").toString(), map.get("startDate").toString()));
+                        if (diff1 < 0) {
+                            previousTrips.add(new ItemObject("Previous Trip ", ds.getKey(), map.get("totalDays").toString(), map.get("startDate").toString()));
 
 
                             reference3 = new Firebase("https://tourist-guide-fd1e1.firebaseio.com/itinerary");
@@ -157,9 +160,9 @@ public class MainHome extends AppCompatActivity {
                                         Map map = ds1.getValue(Map.class);
                                         System.out.println("ids " + map.get("tripId").toString());
                                         if (map.get("tripId").toString().equals(ds.getKey())) {
-                                            placeIds = (ArrayList<String>)map.get("placesId");
+                                            placeIds = (ArrayList<String>) map.get("placesId");
 
-                                            System.out.println("placeIds in trip"+placeIds);
+                                            System.out.println("placeIds in trip" + placeIds);
 
                                             reference2 = new Firebase("https://tourist-guide-fd1e1.firebaseio.com/user");
                                             reference2.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -182,12 +185,10 @@ public class MainHome extends AppCompatActivity {
                                                                 }
 
                                                                 reference2.child(ds2.getKey()).child("placesVisited").setValue(places);
-                                                            }
-
-                                                            else {
+                                                            } else {
                                                                 System.out.println("Enter here for addition");
                                                                 Map<String, String> map2 = new HashMap<>();
-                                                                for(int k=0;k<placeIds.size();k++){
+                                                                for (int k = 0; k < placeIds.size(); k++) {
                                                                     map2.put(placeIds.get(k).toString(), "-1");
 
                                                                 }
@@ -217,34 +218,57 @@ public class MainHome extends AppCompatActivity {
 
 
                         }
-                        if(diff1>=0&&diff<=0){
-                            currentTrips.add(new ItemObject("Current Trip \nDestination: "+map.get("destination")+"\nStart Date: "+map.get("startDate"), ds.getKey(), map.get("totalDays").toString(),  map.get("startDate").toString()));
+                        if (diff1 >= 0 && diff <= 0) {
+                            currentTrips.add(new ItemObject("Trip to " + map.get("destination") + "\nStart Date: " + map.get("startDate") + "\nDuration: " + map.get("totalDays").toString() + " days", ds.getKey(), map.get("totalDays").toString(), map.get("startDate").toString()));
                         }
-                        if(diff1>0&&diff>0){
-                            futureTrips.add(new ItemObject("Future Trip \nDestination: "+map.get("destination")+"\nStart Date: "+map.get("startDate"), ds.getKey(), map.get("totalDays").toString(),  map.get("startDate").toString()));
+                        if (diff1 > 0 && diff > 0) {
+                            futureTrips.add(new ItemObject("Trip to " + map.get("destination") + "\nStart Date: " + map.get("startDate") + "\nDuration: " + map.get("totalDays").toString() + " days", ds.getKey(), map.get("totalDays").toString(), map.get("startDate").toString()));
                         }
-                       // if(map.get("startDate").toString())
+                        // if(map.get("startDate").toString())
                         System.out.println("map " + map);
                     }
                 }
 
 
-                sectionHeader = (RecyclerView)findViewById(R.id.add_header);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainHome.this);
+                sectionHeader = (RecyclerView) findViewById(R.id.add_header);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Home.this);
                 sectionHeader.setLayoutManager(linearLayoutManager);
                 sectionHeader.setHasFixedSize(true);
-                HeaderRecyclerViewSection createSection = new HeaderRecyclerViewSection("Create New Trip",getDataSource());
+                HeaderRecyclerViewSection createSection = new HeaderRecyclerViewSection("Create New Trip", getDataSource());
                 HeaderRecyclerViewSection firstSection = new HeaderRecyclerViewSection("Future Trips", futureTrips);
                 HeaderRecyclerViewSection secondSection = new HeaderRecyclerViewSection("Current Trips", currentTrips);
-                HeaderRecyclerViewSection thirdSection = new HeaderRecyclerViewSection("Trips History", previousTrips.subList(0, min(max(0,previousTrips.size()-1), 5)));
+                HeaderRecyclerViewSection thirdSection = new HeaderRecyclerViewSection("Trips History", previousTrips.subList(0, min(max(0, previousTrips.size() - 1), 5)));
                 HeaderRecyclerViewSection fourthSection = new HeaderRecyclerViewSection("Popular Places", getDataSourceForPopularPlaces());
                 sectionAdapter = new SectionedRecyclerViewAdapter();
-                sectionAdapter.addSection(createSection);
-                sectionAdapter.addSection(firstSection);
+//                sectionAdapter.addSection(createSection);
                 sectionAdapter.addSection(secondSection);
-                sectionAdapter.addSection(fourthSection);
+                sectionAdapter.addSection(firstSection);
+//                sectionAdapter.addSection(fourthSection);
                 sectionAdapter.addSection(thirdSection);
                 sectionHeader.setAdapter(sectionAdapter);
+
+                ImageButton popPlacesButton = (ImageButton) findViewById(R.id.popPlacesButton);
+                popPlacesButton.setOnClickListener(new View.OnClickListener() {
+
+                    public void onClick(View v) {
+                        Intent i = new Intent(Home.this, PopularPlaces.class);
+                        startActivity(i);
+                    }
+
+                    ;
+                });
+                ImageButton createTripButton = (ImageButton) findViewById(R.id.addTripButton);
+                createTripButton.setOnClickListener(new View.OnClickListener() {
+
+                    public void onClick(View v) {
+                        Intent i = new Intent(Home.this, CreateTrip.class);
+                        startActivity(i);
+                    }
+
+                    ;
+                });
+
+
             }
 
             @Override
@@ -257,14 +281,14 @@ public class MainHome extends AppCompatActivity {
 
     private List<ItemObject> getDataSource(){
         List<ItemObject> data = new ArrayList<ItemObject>();
-        data.add(new ItemObject("Create New Trip", "Trip", "One","Date" ));
+        data.add(new ItemObject("Create New Trip   >>", "Trip", "One","Date" ));
         return data;
     }
 
     private List<ItemObject> getDataSourceForPopularPlaces() {
         List<ItemObject> data = new ArrayList<ItemObject>();
         System.out.println("popular place inside");
-        data.add(new ItemObject("Popular Places", "Trip", "One","Date" ));
+        data.add(new ItemObject("Explore Popular Places    >>", "Trip", "One","Date" ));
         return data;
 
     }

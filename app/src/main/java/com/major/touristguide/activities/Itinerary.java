@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 
 import com.major.touristguide.R;
 import com.major.touristguide.ViewPagerAdapter;
@@ -13,7 +14,7 @@ import com.major.touristguide.ViewPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItineraryActivity extends AppCompatActivity {
+public class Itinerary extends AppCompatActivity {
 
     private android.support.v7.widget.Toolbar toolbar;
     private TabLayout tabLayout;
@@ -59,9 +60,18 @@ public class ItineraryActivity extends AppCompatActivity {
     public void onBackPressed()
     {
         super.onBackPressed();
-        startActivity(new Intent(ItineraryActivity.this, MainHome.class));
+        startActivity(new Intent(Itinerary.this, Home.class));
         finish();
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return false;
     }
 
 

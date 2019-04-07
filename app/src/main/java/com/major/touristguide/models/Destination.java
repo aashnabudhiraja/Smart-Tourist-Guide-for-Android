@@ -8,7 +8,7 @@ public class Destination {
     private LatLng pos;
     private String name;
 
-    public Destination(long latitude, long longitude, String name) {
+    public Destination(double latitude, double longitude, String name) {
         this.pos = new LatLng(latitude, longitude);
         this.name = name;
     }

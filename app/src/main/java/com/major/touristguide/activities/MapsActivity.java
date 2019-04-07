@@ -95,7 +95,7 @@ public class MapsActivity extends AppCompatActivity
 //                pd.dismiss();
 
             }
-        }, 1000*placeNameList.size());
+        }, 5);
 
     }
 
