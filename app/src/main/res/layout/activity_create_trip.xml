@@ -50,7 +50,7 @@
             app:layout_constraintVertical_chainStyle="spread_inside" />
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/relativeLayout"
+            android:id="@+id/citiesdropdown"
             android:layout_width="176dp"
             android:layout_height="32dp"
             android:layout_marginBottom="8dp"
