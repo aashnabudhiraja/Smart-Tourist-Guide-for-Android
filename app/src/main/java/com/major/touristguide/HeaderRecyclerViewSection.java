@@ -67,6 +67,7 @@ public class HeaderRecyclerViewSection extends StatelessSection {
                 }
 
                 else {
+
                     reference1 = new Firebase("https://tourist-guide-fd1e1.firebaseio.com/itinerary");
 
                     reference1.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -86,13 +87,18 @@ public class HeaderRecyclerViewSection extends StatelessSection {
 
 
 
-                            Intent i = new Intent(view.getContext(), Itinerary.class);
-                            i.putExtra("startDate",list.get(position).getStartDate());
-                           //System.out.println("home"+fromDateString);
-                            i.putExtra("days", list.get(position).getDays());
-                            System.out.println("array value" + itinerarys);
-                            i.putExtra("itineraryIds", (Serializable) itinerarys);
-                            view.getContext().startActivity(i);
+                            if(list.get(0).getIds().equals("NoTrip")){
+
+                            }
+                            else {
+                                Intent i = new Intent(view.getContext(), Itinerary.class);
+                                i.putExtra("startDate", list.get(position).getStartDate());
+                                //System.out.println("home"+fromDateString);
+                                i.putExtra("days", list.get(position).getDays());
+                                System.out.println("array value" + itinerarys);
+                                i.putExtra("itineraryIds", (Serializable) itinerarys);
+                                view.getContext().startActivity(i);
+                            }
 
                         }
 

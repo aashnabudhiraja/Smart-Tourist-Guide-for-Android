@@ -42,6 +42,7 @@ public class Interest extends AppCompatActivity {
                 System.out.println("Categories "+categoriesList);
 
                 reference1.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("numOfTrips").setValue("1");
+                reference1.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("categoryList").removeValue();
                 reference1.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("categoryList").setValue(categoriesList);
                                     Intent intent = new Intent(Interest.this, Home.class);
                                     startActivity(intent);

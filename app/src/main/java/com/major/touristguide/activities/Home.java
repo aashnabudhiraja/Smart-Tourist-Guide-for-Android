@@ -100,6 +100,12 @@ public class Home extends AppCompatActivity {
                         finish();
                         return true;
                     }
+
+                    case R.id.interests: {
+                        startActivity(new Intent(Home.this,Interest.class));
+                        finish();
+                        return true;
+                    }
                     default:
                         return true;
                 }
@@ -235,8 +241,20 @@ public class Home extends AppCompatActivity {
                 sectionHeader.setLayoutManager(linearLayoutManager);
                 sectionHeader.setHasFixedSize(true);
                 HeaderRecyclerViewSection createSection = new HeaderRecyclerViewSection("Create New Trip", getDataSource());
-                HeaderRecyclerViewSection firstSection = new HeaderRecyclerViewSection("Future Trips", futureTrips);
-                HeaderRecyclerViewSection secondSection = new HeaderRecyclerViewSection("Current Trips", currentTrips);
+                HeaderRecyclerViewSection firstSection;
+                HeaderRecyclerViewSection secondSection;
+                if(futureTrips.isEmpty()){
+                    firstSection = new HeaderRecyclerViewSection("Future Trips", getDataSourceForNoPlaces());
+                }
+                else {
+                    firstSection = new HeaderRecyclerViewSection("Future Trips", futureTrips);
+                }
+                if(currentTrips.isEmpty()){
+                    secondSection = new HeaderRecyclerViewSection("Current Trips", getDataSourceForNoPlaces());
+                }
+                else {
+                    secondSection = new HeaderRecyclerViewSection("Current Trips", currentTrips);
+                }
                 HeaderRecyclerViewSection thirdSection = new HeaderRecyclerViewSection("Trips History", previousTrips.subList(0, min(max(0, previousTrips.size() - 1), 5)));
                 HeaderRecyclerViewSection fourthSection = new HeaderRecyclerViewSection("Popular Places", getDataSourceForPopularPlaces());
                 sectionAdapter = new SectionedRecyclerViewAdapter();
@@ -289,6 +307,14 @@ public class Home extends AppCompatActivity {
         List<ItemObject> data = new ArrayList<ItemObject>();
         System.out.println("popular place inside");
         data.add(new ItemObject("Explore Popular Places    >>", "Trip", "One","Date" ));
+        return data;
+
+    }
+
+    private List<ItemObject> getDataSourceForNoPlaces() {
+        List<ItemObject> data = new ArrayList<ItemObject>();
+        //System.out.println("popular place inside");
+        data.add(new ItemObject("No Trips Yet    >>", "NoTrip", "One","Date" ));
         return data;
 
     }
