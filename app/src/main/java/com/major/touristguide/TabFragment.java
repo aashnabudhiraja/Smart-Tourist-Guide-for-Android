@@ -50,6 +50,7 @@ public class TabFragment extends Fragment implements AdapterView.OnItemClickList
     Map<String, ArrayList<String>> closePerItinerary;
     Map<String, ArrayList<String>> latitudesPerItinerary;
     Map<String, ArrayList<String>> longitudesPerItinerary;
+    String cityId;
 
     public static Fragment getInstance(int position, List<String> itineraryId, String stDate) {
         Bundle bundle = new Bundle();
@@ -127,6 +128,7 @@ public class TabFragment extends Fragment implements AdapterView.OnItemClickList
                             String placeName = map1.get("placeName").toString();
                             String openTime = map1.get("Open Time").toString();
                             String closeTime = map1.get("Close Time").toString();
+                            cityId = map1.get("cityId").toString();
                             rowItems.add(new RowItem(placeIds.get(j), placeName, "Opening Hours: "+openTime+" - "+closeTime));
                             CustomBaseAdapter adapter = new CustomBaseAdapter(getContext(), rowItems);
                             listView.setAdapter(adapter);
@@ -266,6 +268,7 @@ public class TabFragment extends Fragment implements AdapterView.OnItemClickList
             public void onClick(View v) {
                 Intent i =new Intent(getContext(),ItineraryEdit.class);
                 i.putExtra("itineraryId",itineraryIds.get(position));
+                i.putExtra("cityId",cityId);
                 i.putStringArrayListExtra("placeIds", placeIdsPerItinerary.get(itineraryIds.get(position)));
                 i.putStringArrayListExtra("placeNames", placeNamesPerItinerary.get(itineraryIds.get(position)));
                 i.putStringArrayListExtra("open", openPerItinerary.get(itineraryIds.get(position)));

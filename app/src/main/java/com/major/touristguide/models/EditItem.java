@@ -6,11 +6,11 @@ public class EditItem {
     private String desc;
     private boolean selected;
 
-    public EditItem(String id, String title, String desc) {
+    public EditItem(String id, String title, String desc, boolean selected) {
         this.placeId = id;
         this.title = title;
         this.desc = desc;
-        this.selected = true;
+        this.selected = selected;
     }
     public String getId() {
         return placeId;

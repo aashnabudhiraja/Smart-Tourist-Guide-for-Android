@@ -580,12 +580,18 @@
 
                 <Button
                     android:id="@+id/btn_doneInterest"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dip"
-                    android:background="@color/colorAccent"
                     android:text="Done"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:layout_width="131dp"
+                    android:layout_height="54dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/accentFinal"
+                    android:textSize="18sp"/>
+
+
 
             </TableLayout>
         </LinearLayout>

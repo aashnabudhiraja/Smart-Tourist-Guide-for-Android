@@ -8,13 +8,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.major.touristguide.EditBaseAdapter;
 import com.major.touristguide.models.EditItem;
 import com.major.touristguide.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ItineraryEdit extends AppCompatActivity {
@@ -24,23 +28,26 @@ public class ItineraryEdit extends AppCompatActivity {
     List<EditItem> rowItems;
 
     static String itineraryId;
+    static String cityId;
     ArrayList<String> placeIdsPerItinerary;
     ArrayList<String> placeNamesPerItinerary;
     ArrayList<String> openPerItinerary;
     ArrayList<String> closePerItinerary;
+    Button cancelbtn, savebtn;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itineraryedit);
 
-        Button savebtn = (Button) findViewById(R.id.save);
-        Button cancelbtn = (Button) findViewById(R.id.cancel);
+        savebtn = (Button) findViewById(R.id.save);
+        cancelbtn = (Button) findViewById(R.id.cancel);
 
         setTitle("Edit");
 
         Bundle extras = getIntent().getExtras();
         itineraryId = (String)getIntent().getSerializableExtra("itineraryId");
-        System.out.println("itinerary"+itineraryId);
+        cityId = (String)getIntent().getSerializableExtra("cityId");
+        System.out.println("cityId"+cityId);
 
 //        reference1 = new Firebase("https://tourist-guide-fd1e1.firebaseio.com/itinerary");
 //        listView = (ListView) findViewById(R.id.listViewEdit);
@@ -98,92 +105,122 @@ public class ItineraryEdit extends AppCompatActivity {
 //        });
 
         final Firebase firebase = new Firebase("https://tourist-guide-fd1e1.firebaseio.com/itinerary");
+        final Firebase firebase1 = new Firebase("https://tourist-guide-fd1e1.firebaseio.com/place");
 
         placeIdsPerItinerary = (ArrayList<String>)getIntent().getStringArrayListExtra("placeIds");
         placeNamesPerItinerary = (ArrayList<String>)getIntent().getStringArrayListExtra("placeNames");
         openPerItinerary = (ArrayList<String>)getIntent().getStringArrayListExtra("open");
         closePerItinerary = (ArrayList<String>)getIntent().getStringArrayListExtra("close");
 
-        listView = (ListView) findViewById(R.id.listViewEdit);
-        rowItems = new ArrayList();
-        for(int i=0; i<placeNamesPerItinerary.size(); i++) {
-            System.out.println("names" + placeNamesPerItinerary.get(i) + "" + openPerItinerary.get(i) + "" +
-                    closePerItinerary.get(i));
-            String placeId = placeIdsPerItinerary.get(i);
-            String place = placeNamesPerItinerary.get(i);
-            String open = openPerItinerary.get(i);
-            String close = closePerItinerary.get(i);
-            rowItems.add(new EditItem(placeId, place, "Place Opens at " +
-                    open + "\nCloses at " + close));
+
+        firebase1.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listView = (ListView) findViewById(R.id.listViewEdit);
+                rowItems = new ArrayList();
+                System.out.println("keys " + dataSnapshot.getChildrenCount());
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Map map = ds.getValue(Map.class);
+                    boolean flag = false;
+                    for(int i=0; i<placeNamesPerItinerary.size(); i++) {
+
+                        if (ds.getKey().equals(placeIdsPerItinerary.get(i))) {
+
+                            String placeId = placeIdsPerItinerary.get(i);
+                            String place = placeNamesPerItinerary.get(i);
+                            String open = openPerItinerary.get(i);
+                            String close = closePerItinerary.get(i);
+                            rowItems.add(new EditItem(placeId, place, "Place Opens at " +
+                                    open + "\nCloses at " + close, true));
+                            flag = true;
+
+                        }
+                    }
+
+                         if(!flag&&map.get("cityId").equals(cityId)){
+
+                             String placeId = ds.getKey();
+                             String place = map.get("placeName").toString();
+                             String open = map.get("Open Time").toString();
+                             String close = map.get("Close Time").toString();
+                             rowItems.add(new EditItem(placeId, place, "Place Opens at " +
+                                     open + "\nCloses at " + close, false));
+
+                        }
+                }
+
+                EditBaseAdapter adapter = new EditBaseAdapter(ItineraryEdit.this, rowItems);
+                listView.setAdapter(adapter);
+
+                savebtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                                ItineraryEdit.this);
+
+                        // set title
+                        alertDialogBuilder.setTitle("Warning");
+
+                        // set dialog message
+                        alertDialogBuilder
+                                .setMessage("Changes would be permanent")
+                                .setCancelable(false)
+                                .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        // if this button is clicked, close
+                                        // current activity
+                                        List<String> values = new CopyOnWriteArrayList<>();
+                                        for (int i = 0; i < EditBaseAdapter.editItems.size(); i++){
+                                            if(EditBaseAdapter.editItems.get(i).isSelected()) {
+                                                System.out.println(EditBaseAdapter.editItems.get(i).getId() + EditBaseAdapter.editItems.get(i).getTitle());
+                                                //firebase.child(itineraryId).child("placesId").child(Integer.toString(i)).removeValue();
+                                                values.add(EditBaseAdapter.editItems.get(i).getId());
+
+                                            }
+                                        }
+
+                                        firebase.child(itineraryId).child("placesId").removeValue();
+                                        firebase.child(itineraryId).child("placesId").setValue(values);
+
+                                        ItineraryEdit.this.finish();
+                                        dialog.cancel();
+                                    }
+                                })
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
 
 
+                        // create alert dialog
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+
+                        // show it
+                        alertDialog.show();
 
 
-        }
+                    }
+                });
+
+                cancelbtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ItineraryEdit.this.finish();
+                    }
+                });
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 //                R.layout.edit_item, places);
 
-        EditBaseAdapter adapter = new EditBaseAdapter(ItineraryEdit.this, rowItems);
-        listView.setAdapter(adapter);
-
-        savebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                        ItineraryEdit.this);
-
-                // set title
-                alertDialogBuilder.setTitle("Warning");
-
-                // set dialog message
-                alertDialogBuilder
-                        .setMessage("Changes would be permanent")
-                        .setCancelable(false)
-                        .setPositiveButton("OK",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                // if this button is clicked, close
-                                // current activity
-                                List<String> values = new CopyOnWriteArrayList<>();
-                                for (int i = 0; i < EditBaseAdapter.editItems.size(); i++){
-                                    if(EditBaseAdapter.editItems.get(i).isSelected()) {
-                                        System.out.println(EditBaseAdapter.editItems.get(i).getId() + EditBaseAdapter.editItems.get(i).getTitle());
-                                        //firebase.child(itineraryId).child("placesId").child(Integer.toString(i)).removeValue();
-                                        values.add(EditBaseAdapter.editItems.get(i).getId());
-
-                                    }
-                                }
-
-                                firebase.child(itineraryId).child("placesId").removeValue();
-                                firebase.child(itineraryId).child("placesId").setValue(values);
-
-                                ItineraryEdit.this.finish();
-                                dialog.cancel();
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-
-
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-
-                // show it
-                alertDialog.show();
-
-
-            }
-        });
-
-        cancelbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ItineraryEdit.this.finish();
-            }
-        });
 
     }
 }
