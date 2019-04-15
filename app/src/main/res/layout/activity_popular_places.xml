@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -17,74 +17,64 @@
         android:orientation="vertical"
         android:paddingBottom="16dp"
         android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        tools:context=".activities.PopularPlaces">
+        android:paddingRight="16dp">
 
 
-        <TextView
-            android:id="@+id/textView4"
-            style="@android:style/TextAppearance.Large"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="City:    "
-            android:textColor="@android:color/black"
-            app:layout_constraintEnd_toStartOf="@+id/citiesdropdown"
-            app:layout_constraintHorizontal_bias="0.876"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="horizontal">
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/citiesdropdown"
-            android:layout_width="132dp"
-            android:layout_height="31dp"
-            android:layout_marginEnd="108dp"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/background"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <Spinner
-                android:id="@+id/cities"
+            <TextView
+                android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:gravity="center"
-                android:spinnerMode="dropdown" />
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:src="@drawable/spinner_arrow"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="City:    "
+                android:textColor="@android:color/black" />
 
-        </android.support.constraint.ConstraintLayout>
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/citiesdropdown"
+                android:layout_width="129dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/background">
+
+                <Spinner
+                    android:id="@+id/cities"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:spinnerMode="dropdown" />
+
+                <ImageView
+                    android:layout_width="42dp"
+                    android:layout_height="33dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/spinner_arrow"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
+
+            </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
 
 
         <ListView
             android:id="@+id/places"
-            android:layout_width="382dp"
-            android:layout_height="611dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.615"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/citiesdropdown"
-            app:layout_constraintVertical_bias="0.0" />
-    </android.support.constraint.ConstraintLayout>
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
 </android.support.v4.widget.DrawerLayout>
